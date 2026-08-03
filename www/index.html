@@ -655,14 +655,37 @@ function nameSpellings(name,target,sys){
 </script>
 <script>
 /* ================= PALM TAB UI ================= */
-let palmStage=null, palmHand='right', palmRefs={};
+let palmStage=null, palmHand='right', palmWriting='right', palmRefs={};
+// Which hand is "dominant" depends on the person, not on which hand it is.
+// A left-handed person's LEFT hand is the dominant one — the classical
+// dominant = present/future, non-dominant = inherited nature rule follows handedness.
+function isDominantHand(){ return palmHand===palmWriting; }
+function updateHandNote(){
+  const n=el('handNote'); if(!n) return;
+  const dom=isDominantHand();
+  n.innerHTML=dom
+    ? L('This is your <b>dominant</b> hand — traditionally read for the life you are actively making: present and future.',
+        'यह आपका <b>प्रमुख</b> हाथ है — परंपरा में इसे उस जीवन के लिए पढ़ा जाता है जो आप स्वयं बना रहे हैं: वर्तमान और भविष्य।')
+    : L('This is your <b>non-dominant</b> hand — traditionally read for inherited nature, early life and the potential you were born with.',
+        'यह आपका <b>गौण</b> हाथ है — परंपरा में इसे जन्मजात स्वभाव, प्रारंभिक जीवन और जन्म से मिली संभावनाओं के लिए पढ़ा जाता है।');
+  n.innerHTML+=' <i>'+L('For a full reading, trace both hands one after the other and compare.',
+    'पूर्ण पठन के लिए दोनों हाथ बारी-बारी से ट्रेस करें और तुलना करें।')+'</i>';
+}
 function renderPalmTab(){
   let h='<div class="card"><h2>🖐 Palmistry — trace your palm</h2>';
   h+='<div class="help"><b>How this works:</b> take a clear, well-lit photo of your open palm (or upload one), then trace each line with your finger or mouse. The app <b>measures</b> the real length, curve and clarity of what you trace, and gives the traditional palmistry reading for those measurements. Nothing is uploaded anywhere — the photo stays on your device.</div>';
   h+='<div class="grid g3">'
-    +'<div><label>Which hand?</label><select id="palmHand"><option value="right">Right (dominant — present &amp; future)</option><option value="left">Left (non-dominant — inherited traits)</option></select></div>'
-    +'<div><label>Palm photo</label><input type="file" id="palmFile" accept="image/*"></div>'
-    +'<div style="display:flex;align-items:end"><button class="small ghost" style="width:100%" onclick="resetPalm()">Clear tracing</button></div></div>';
+    +'<div><label>'+L('Are you right- or left-handed?','आप दाएँ हाथ से लिखते हैं या बाएँ?')+'</label>'
+    +'<select id="palmWriting" onchange="palmWriting=this.value;updateHandNote()">'
+    +'<option value="right">'+L('Right-handed','दाएँ हाथ से (दाहिना प्रमुख)')+'</option>'
+    +'<option value="left">'+L('Left-handed','बाएँ हाथ से (बायाँ प्रमुख)')+'</option></select></div>'
+    +'<div><label>'+L('Which hand is in the photo?','फोटो में कौन सा हाथ है?')+'</label>'
+    +'<select id="palmHand" onchange="palmHand=this.value;updateHandNote()">'
+    +'<option value="right">'+L('Right hand','दायाँ हाथ')+'</option>'
+    +'<option value="left">'+L('Left hand','बायाँ हाथ')+'</option></select></div>'
+    +'<div><label>'+L('Palm photo','हथेली की फोटो')+'</label><input type="file" id="palmFile" accept="image/*"></div></div>';
+  h+='<p class="note" id="handNote"></p>';
+  h+='<div style="margin-top:8px"><button class="small ghost" onclick="resetPalm()">'+L('Clear tracing','ट्रेसिंग हटाएं')+'</button></div>';
   h+='<div id="palmStageBox" style="text-align:center;margin-top:14px"></div>';
   h+='<div id="palmControls" style="display:none">';
   h+='<h3>1. Trace the lines</h3><div class="steps" id="palmSteps"></div>';
@@ -679,7 +702,8 @@ function renderPalmTab(){
   palmStage=makeStage(box,()=>{ el('palmControls').style.display='block'; updatePalmSteps(); });
   palmStage.onDone=updatePalmSteps;
   el('palmFile').onchange=e=>{ if(e.target.files[0]) palmStage.load(e.target.files[0]); };
-  el('palmHand').onchange=e=>palmHand=e.target.value;
+  el('palmWriting').value=palmWriting; el('palmHand').value=palmHand;
+  updateHandNote();
   // line buttons
   el('palmLineBtns').innerHTML=PALM_LINES.map(([k,n,d])=>
     '<button class="small ghost" data-line="'+k+'" onclick="pickLine(\''+k+'\')">'+n+'</button>').join('');
@@ -749,8 +773,15 @@ function doPalmReading(){
     thumbAngle:Math.min(110,Math.max(20,thumbAngle))};
   const Rd=palmReading(m);
   const mo=palmMonthly(m,new Date());
-  let h='<h3 style="margin-top:20px">Your palm reading — '+(palmHand==='right'?'right hand':'left hand')+'</h3>';
-  h+='<p class="note">'+(palmHand==='right'?'The dominant hand is traditionally read for the life you are making — present and future.':'The non-dominant hand is traditionally read for inherited nature and early life.')+'</p>';
+  const dom=isDominantHand();
+  let h='<h3 style="margin-top:20px">'+L('Your palm reading — ','आपका हस्तरेखा पठन — ')
+    +L(palmHand==='right'?'right hand':'left hand',palmHand==='right'?'दायाँ हाथ':'बायाँ हाथ')
+    +' ('+L(dom?'dominant':'non-dominant',dom?'प्रमुख':'गौण')+')</h3>';
+  h+='<p class="note">'+(dom
+    ? L('Because you are '+(palmWriting==='right'?'right':'left')+'-handed, this is your dominant hand — traditionally read for the life you are actively making: present and future.',
+        'क्योंकि आप '+(palmWriting==='right'?'दाएँ':'बाएँ')+' हाथ से लिखते हैं, यह आपका प्रमुख हाथ है — परंपरा में इसे वर्तमान और भविष्य के लिए पढ़ा जाता है।')
+    : L('Because you are '+(palmWriting==='right'?'right':'left')+'-handed, this is your non-dominant hand — traditionally read for inherited nature, early life and the potential you were born with.',
+        'क्योंकि आप '+(palmWriting==='right'?'दाएँ':'बाएँ')+' हाथ से लिखते हैं, यह आपका गौण हाथ है — परंपरा में इसे जन्मजात स्वभाव और प्रारंभिक जीवन के लिए पढ़ा जाता है।'))+'</p>';
   h+='<div class="grid g2" style="margin-top:12px"><div>';
   h+='<div class="metric"><span>Hand type</span><b>'+m.shapeType+'</b></div>';
   h+='<div class="metric"><span>Life line</span><b>'+Rd.life.len+' · '+Rd.life.curve+'</b></div>';
@@ -1292,7 +1323,14 @@ function setLang(l){
   el('backLbl').textContent=L(UI.back[0],UI.back[1]);
   document.querySelectorAll('#tabBar button').forEach(b=>{
     const k=UI.tabs[b.dataset.t]; if(k) b.textContent=L(k[0],k[1]); });
+  // rebuild the palm tab so its hand labels/notes follow the language,
+  // keeping whatever the user already selected
+  const active=document.querySelector('#tabBar button.active');
+  const hadPalm=palmStage&&palmStage.img;
+  if(!hadPalm) renderPalmTab();
+  else updateHandNote();
   renderUpayTab();
+  if(active) showTab(active.dataset.t,false);
 }
 /* ================= INIT ================= */
 document.querySelectorAll('#tabBar button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
