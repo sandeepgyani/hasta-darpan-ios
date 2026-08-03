@@ -1,0 +1,9 @@
+{
+  "appId": "in.co.pcssolutions.hastadarpan",
+  "appName": "Hasta Darpan",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#12100f"
+  }
+}

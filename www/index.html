@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hasta Darpan — Palmistry, Face Reading &amp; Numerology</title>
+<style>
+:root{
+  --bg:#12100f; --panel:#221d19; --panel2:#2e2823; --gold:#d9a441; --gold2:#f2cd7e;
+  --ink:#f5ece0; --dim:#bfb0a0; --accent:#d2683f; --good:#7fbf6a; --bad:#e0705c; --line:#453a2f;
+  --saffron:#ff9933; --lotus:#e05c8a; --peacock:#1f9c8f; --indigo:#6a63c8; --leaf:#5aa855;
+  --marigold:#f5a623; --royal:#8e4ec6;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); background:radial-gradient(1100px 550px at 50% -80px,#2a2118,var(--bg)); color:var(--ink);
+  font-family:Georgia,'Noto Serif',serif; min-height:100vh; padding-bottom:60px;}
+header{text-align:center; padding:24px 16px 8px;}
+header h1{color:var(--gold2); font-size:1.9rem; letter-spacing:.5px;}
+header h1 .sym{color:var(--accent);}
+header p{color:var(--dim); font-style:italic; margin-top:4px; font-size:.95rem;}
+.wrap{max-width:1050px; margin:0 auto; padding:0 14px;}
+.card{background:linear-gradient(160deg,var(--panel),#1a1512); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin:14px 0;
+  box-shadow:0 8px 26px rgba(0,0,0,.4); position:relative; overflow:hidden;}
+.card::before{content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--saffron),var(--lotus),var(--indigo),var(--peacock),var(--marigold));}
+.card h2{color:var(--gold2); font-size:1.12rem; border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px;}
+.card h3{color:var(--gold2); font-size:1rem; margin:14px 0 6px; border-left:3px solid var(--saffron); padding-left:9px;}
+.remedy-card{background:linear-gradient(150deg,rgba(210,104,63,.16),rgba(142,78,198,.10));
+  border:1px solid rgba(210,104,63,.4); border-left:4px solid var(--saffron);
+  border-radius:12px; padding:14px 16px; margin:12px 0;}
+.remedy-card h4{color:var(--marigold); font-size:1rem; margin-bottom:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.remedy-card .why{color:var(--dim); font-size:.87rem; font-style:italic; margin-bottom:10px;}
+.upay-row{display:flex; gap:10px; padding:7px 0; border-top:1px dashed rgba(255,255,255,.09); align-items:flex-start;}
+.upay-row .ic{font-size:1.05rem; flex-shrink:0; width:24px; text-align:center;}
+.upay-row .tx{flex:1; line-height:1.55; font-size:.92rem;}
+.sev{display:inline-block; padding:2px 10px; border-radius:10px; font-size:.72rem; font-weight:bold; margin-left:auto;}
+.sev.high{background:rgba(224,112,92,.25); color:#ff9b8a; border:1px solid #e0705c;}
+.sev.med{background:rgba(245,166,35,.22); color:#ffc978; border:1px solid var(--marigold);}
+.sev.low{background:rgba(127,191,106,.2); color:#a8dd97; border:1px solid var(--good);}
+.topbar{display:flex; align-items:center; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:10px;}
+.topbar button{background:var(--panel2); color:var(--gold2); border:1px solid var(--line);
+  border-radius:20px; padding:7px 15px; font-size:.85rem; font-weight:normal;}
+.topbar button.on{background:linear-gradient(135deg,var(--peacock),#17756b); color:#fff; border-color:var(--peacock);}
+#backBtn{background:linear-gradient(135deg,var(--indigo),#4f49a5); color:#fff; border-color:var(--indigo);}
+.grid{display:grid; gap:12px;}
+.g2{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));}
+.g3{grid-template-columns:repeat(auto-fit,minmax(165px,1fr));}
+label{display:block; color:var(--dim); font-size:.85rem; margin-bottom:4px;}
+input,select,textarea{width:100%; background:var(--panel2); color:var(--ink); border:1px solid var(--line);
+  border-radius:8px; padding:9px 10px; font-family:inherit; font-size:.95rem;}
+input:focus,select:focus,textarea:focus{outline:none; border-color:var(--gold);}
+input[type=file]{padding:7px; font-size:.85rem;}
+button{background:linear-gradient(180deg,var(--gold),#a97d2c); color:#221a09; font-weight:bold; border:none;
+  border-radius:9px; padding:11px 22px; font-size:1rem; cursor:pointer; font-family:inherit;}
+button:hover{filter:brightness(1.1);} button:disabled{opacity:.45; cursor:not-allowed;}
+button.small{padding:7px 14px; font-size:.85rem;}
+button.ghost{background:transparent; color:var(--gold); border:1px solid var(--gold);}
+.tabs{display:flex; flex-wrap:wrap; gap:6px; margin:16px 0 4px;}
+.tabs button{background:var(--panel2); color:var(--dim); border:1px solid var(--line); border-radius:20px;
+  padding:8px 16px; font-size:.88rem; font-weight:normal;}
+.tabs button.active{background:linear-gradient(135deg,var(--saffron),var(--marigold)); color:#2a1806; font-weight:bold;
+  border-color:var(--marigold); box-shadow:0 3px 12px rgba(245,166,35,.35);}
+.tabpane{display:none;} .tabpane.show{display:block;}
+table{width:100%; border-collapse:collapse; font-size:.9rem;}
+th,td{border:1px solid var(--line); padding:7px 9px; text-align:left;}
+th{background:var(--panel2); color:var(--gold);}
+tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+.pill{display:inline-block; background:var(--panel2); border:1px solid var(--line); border-radius:14px;
+  padding:3px 12px; margin:3px 4px 3px 0; font-size:.85rem;}
+.pill b{color:var(--gold2);}
+.note{color:var(--dim); font-size:.82rem; margin-top:8px; font-style:italic;}
+.big{color:var(--gold2); font-size:1.15rem; margin-bottom:8px;}
+.remedy{background:rgba(181,86,58,.13); border-left:3px solid var(--accent); padding:10px 12px; border-radius:6px; margin-top:10px;}
+.readout{line-height:1.65; margin-top:10px;}
+.score-row{display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed var(--line); padding:7px 2px;}
+.stage{position:relative; display:inline-block; max-width:100%; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+.stage canvas{display:block; max-width:100%; touch-action:none; cursor:crosshair;}
+.steps{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;}
+.steps span{padding:5px 11px; border-radius:14px; font-size:.82rem; border:1px solid var(--line); color:var(--dim); background:var(--panel2);}
+.steps span.done{border-color:var(--good); color:var(--good);}
+.steps span.now{border-color:var(--gold); color:var(--gold2); font-weight:bold;}
+.help{background:var(--panel2); border-radius:8px; padding:10px 12px; margin:10px 0; font-size:.9rem; color:var(--dim);}
+.help b{color:var(--gold2);}
+.metric{display:flex; justify-content:space-between; padding:6px 2px; border-bottom:1px dashed var(--line); font-size:.9rem;}
+.metric b{color:var(--gold2);}
+#toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--gold); color:#221a09;
+  padding:10px 22px; border-radius:20px; font-weight:bold; display:none; z-index:99;}
+.disclaim{background:rgba(217,164,65,.09); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:14px 0; font-size:.88rem; color:var(--dim);}
+.disclaim b{color:var(--gold2);}
+@media print{ body{background:#fff;color:#000;} .tabs,button{display:none;} }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="sym">☙</span> <span id="appTitle">Hasta Darpan</span> <span class="sym">❧</span></h1>
+  <p id="appTag">Palmistry · Face Reading · Numerology — measured on your device, read in the traditional way</p>
+  <div class="topbar">
+    <button id="backBtn" onclick="goBack()" style="display:none">← <span id="backLbl">Back</span></button>
+    <button id="langEN" class="on" onclick="setLang('en')">English</button>
+    <button id="langHI" onclick="setLang('hi')">हिन्दी</button>
+  </div>
+</header>
+<div class="wrap">
+  <div class="tabs" id="tabBar">
+    <button data-t="palm" class="active">🖐 Palmistry</button>
+    <button data-t="face">🙂 Face Reading</button>
+    <button data-t="num">🔢 Numerology</button>
+    <button data-t="upay">🪔 Upay</button>
+    <button data-t="tools">🧮 Number Tools</button>
+    <button data-t="about">📖 How it works</button>
+  </div>
+  <div class="tabpane show" id="pane-palm"></div>
+  <div class="tabpane" id="pane-face"></div>
+  <div class="tabpane" id="pane-num"></div>
+  <div class="tabpane" id="pane-upay"></div>
+  <div class="tabpane" id="pane-tools"></div>
+  <div class="tabpane" id="pane-about"></div>
+</div>
+<div id="toast"></div>
+<script>
+/* ================= SHARED HELPERS ================= */
+const el=id=>document.getElementById(id);
+function toast(m){const t=el('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2300);}
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const ang=(a,b)=>Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
+function polylineLen(pts){let s=0;for(let i=1;i<pts.length;i++)s+=dist(pts[i-1],pts[i]);return s;}
+// curvature: how much a traced line bows away from its straight chord (0 = straight)
+function bow(pts){ if(pts.length<3) return 0;
+  const a=pts[0],b=pts[pts.length-1],c=dist(a,b); if(c<1) return 0;
+  let max=0; for(const p of pts){
+    const t=((p.x-a.x)*(b.x-a.x)+(p.y-a.y)*(b.y-a.y))/(c*c);
+    const px=a.x+t*(b.x-a.x), py=a.y+t*(b.y-a.y);
+    max=Math.max(max,Math.hypot(p.x-px,p.y-py)); }
+  return max/c; }
+// average local contrast along a traced path = how "deep/clear" the line reads in the photo
+function pathContrast(ctx,pts,W,H){
+  if(pts.length<2) return 0;
+  const img=ctx.getImageData(0,0,W,H).data;
+  const lum=(x,y)=>{x=Math.max(0,Math.min(W-1,Math.round(x)));y=Math.max(0,Math.min(H-1,Math.round(y)));
+    const i=(y*W+x)*4; return 0.299*img[i]+0.587*img[i+1]+0.114*img[i+2];};
+  let sum=0,n=0;
+  for(let i=1;i<pts.length;i++){
+    const dx=pts[i].x-pts[i-1].x, dy=pts[i].y-pts[i-1].y, L=Math.hypot(dx,dy);
+    if(L<1) continue;
+    const nx=-dy/L, ny=dx/L;
+    for(let s=0;s<=L;s+=3){
+      const x=pts[i-1].x+dx*s/L, y=pts[i-1].y+dy*s/L;
+      const on=lum(x,y);
+      const off=(lum(x+nx*5,y+ny*5)+lum(x-nx*5,y-ny*5))/2;
+      sum+=Math.abs(off-on); n++; } }
+  return n? sum/n : 0; }
+/* ================= IMAGE TRACING STAGE ================= */
+function makeStage(container,onReady){
+  const wrap=document.createElement('div'); wrap.className='stage';
+  const cv=document.createElement('canvas'); wrap.appendChild(cv);
+  container.appendChild(wrap);
+  const ctx=cv.getContext('2d',{willReadFrequently:true});
+  const st={cv,ctx,img:null,W:0,H:0,paths:{},current:null,mode:'draw',pts:[],drawing:false};
+  st.load=function(file){
+    const fr=new FileReader();
+    fr.onload=()=>{ const im=new Image();
+      im.onload=()=>{ const maxW=Math.min(520,window.innerWidth-70);
+        const sc=Math.min(1,maxW/im.width);
+        cv.width=Math.round(im.width*sc); cv.height=Math.round(im.height*sc);
+        st.W=cv.width; st.H=cv.height; st.img=im; st.paths={}; st.pts=[];
+        st.redraw(); if(onReady) onReady(); };
+      im.src=fr.result; };
+    fr.readAsDataURL(file); };
+  st.redraw=function(){
+    if(!st.img) return;
+    ctx.clearRect(0,0,st.W,st.H); ctx.drawImage(st.img,0,0,st.W,st.H);
+    const COL={life:'#7fbf6a',head:'#f2cd7e',heart:'#d96a5a',fate:'#7ab7d9',sun:'#e0a3f0',marriage:'#ffffff'};
+    for(const k in st.paths){ drawPath(st.paths[k],COL[k]||'#d9a441'); }
+    if(st.pts.length) drawPath(st.pts,'#ffdf8a',true);
+  };
+  function drawPath(pts,color,live){
+    if(!pts.length) return;
+    ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=live?3:2.5; ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.shadowColor='rgba(0,0,0,.7)'; ctx.shadowBlur=3;
+    ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+    pts.forEach(p=>ctx.lineTo(p.x,p.y)); ctx.stroke();
+    if(pts.length<=6){ ctx.fillStyle=color; pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,7);ctx.fill();}); }
+    ctx.restore(); }
+  const pos=e=>{ const r=cv.getBoundingClientRect();
+    const t=e.touches?e.touches[0]:e;
+    return {x:(t.clientX-r.left)*st.W/r.width, y:(t.clientY-r.top)*st.H/r.height}; };
+  const start=e=>{ if(!st.img||!st.current) return; e.preventDefault(); st.drawing=true; st.pts=[pos(e)]; st.redraw(); };
+  const move=e=>{ if(!st.drawing) return; e.preventDefault();
+    const p=pos(e); const last=st.pts[st.pts.length-1];
+    if(!last||dist(last,p)>4){ st.pts.push(p); st.redraw(); } };
+  const end=e=>{ if(!st.drawing) return; st.drawing=false;
+    if(st.pts.length>2){ st.paths[st.current]=st.pts.slice(); }
+    st.pts=[]; st.redraw(); if(st.onDone) st.onDone(); };
+  cv.addEventListener('mousedown',start); cv.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',end);
+  cv.addEventListener('touchstart',start,{passive:false}); cv.addEventListener('touchmove',move,{passive:false});
+  cv.addEventListener('touchend',end);
+  return st; }
+/* point-marking stage (for face landmarks) */
+function makePointStage(container,onChange){
+  const wrap=document.createElement('div'); wrap.className='stage';
+  const cv=document.createElement('canvas'); wrap.appendChild(cv);
+  container.appendChild(wrap);
+  const ctx=cv.getContext('2d',{willReadFrequently:true});
+  const st={cv,ctx,img:null,W:0,H:0,points:{},current:null};
+  st.load=function(file){ const fr=new FileReader();
+    fr.onload=()=>{ const im=new Image();
+      im.onload=()=>{ const maxW=Math.min(460,window.innerWidth-70);
+        const sc=Math.min(1,maxW/im.width);
+        cv.width=Math.round(im.width*sc); cv.height=Math.round(im.height*sc);
+        st.W=cv.width; st.H=cv.height; st.img=im; st.points={}; st.redraw(); if(onChange) onChange(); };
+      im.src=fr.result; };
+    fr.readAsDataURL(file); };
+  st.redraw=function(){ if(!st.img) return;
+    ctx.clearRect(0,0,st.W,st.H); ctx.drawImage(st.img,0,0,st.W,st.H);
+    for(const k in st.points){ const p=st.points[k];
+      ctx.save(); ctx.strokeStyle='#f2cd7e'; ctx.fillStyle='rgba(217,164,65,.55)'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(p.x,p.y,6,0,7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#fff'; ctx.font='10px Georgia'; ctx.shadowColor='#000'; ctx.shadowBlur=4;
+      ctx.fillText(k,p.x+9,p.y+3); ctx.restore(); } };
+  cv.addEventListener('click',e=>{ if(!st.img||!st.current) return;
+    const r=cv.getBoundingClientRect();
+    st.points[st.current]={x:(e.clientX-r.left)*st.W/r.width,y:(e.clientY-r.top)*st.H/r.height};
+    st.redraw(); if(onChange) onChange(); });
+  return st; }
+</script>
+<script>
+/* ================= PALMISTRY ================= */
+const PALM_LINES=[
+ ['life','Life line','Curves around the base of the thumb, from between thumb and index finger down to the wrist.'],
+ ['head','Head line','Runs across the middle of the palm, starting near the life line under the index finger.'],
+ ['heart','Heart line','The uppermost long line, running below the fingers from the little-finger side.'],
+ ['fate','Fate line','Optional. A vertical line rising from near the wrist towards the middle finger.'],
+ ['sun','Sun line','Optional. A short vertical line below the ring finger.'],
+ ['marriage','Marriage lines','Optional. Short lines on the edge of the palm below the little finger.']];
+const HAND_SHAPES={
+ Earth:'Square palm with short fingers — practical, dependable, steady with routine and material matters.',
+ Air:'Square palm with long fingers — intellectual, communicative, curious and analytical.',
+ Water:'Long palm with long fingers — sensitive, intuitive, imaginative and emotionally attuned.',
+ Fire:'Long palm with short fingers — energetic, enterprising, quick to act and lead.'};
+function classifyHand(palmW,palmH,fingerLen){
+  const longPalm = palmH/palmW > 1.12;
+  const longFing = fingerLen/palmH > 0.92;
+  if(!longPalm&&!longFing) return 'Earth';
+  if(!longPalm&&longFing) return 'Air';
+  if(longPalm&&longFing) return 'Water';
+  return 'Fire'; }
+function palmReading(m){
+  // m: measured metrics
+  const R={};
+  const rel=v=>v/m.palmH; // normalise by palm height
+  // ---- Life line
+  const lifeLen=rel(m.lifeLen), lifeBow=m.lifeBow;
+  R.life={
+    len:lifeLen>0.95?'Long':lifeLen>0.65?'Moderate':'Short',
+    curve:lifeBow>0.30?'Widely curved':lifeBow>0.17?'Well curved':'Close to the thumb',
+    clarity:m.lifeClarity>16?'Deep and clear':m.lifeClarity>8?'Moderately marked':'Fine and faint',
+    text:(lifeBow>0.25?'A generously curved life line traditionally indicates strong vitality, warmth and an enthusiasm for living. You draw energy from people and activity. ':
+        lifeBow>0.15?'A well-curved life line suggests balanced stamina — you can sustain effort without burning out, provided rest is respected. ':
+        'A life line that hugs the thumb suggests energy that is conserved and inward; classical texts read this as caution with over-exertion and a preference for a settled pace. ')
+      +(lifeLen>0.95?'Its length speaks of resilience and a constitution that recovers well.':
+        lifeLen>0.65?'Its length reads as steady health with attention needed at times of change.':
+        'A shorter line is not read as a short life — traditionally it points to energy that comes in focused bursts rather than a constant flow.')
+      +(m.lifeClarity>16?' The line is deeply etched, read as robust physical resources.':m.lifeClarity<8?' The line is fine, read as sensitivity to strain and a need for regular rest.':'')};
+  // ---- Head line
+  const headLen=rel(m.headLen), headSlope=m.headSlope, headBow=m.headBow;
+  R.head={
+    len:headLen>0.85?'Long':headLen>0.55?'Moderate':'Short',
+    slope:headSlope>22?'Sloping downward':headSlope>8?'Gently sloping':'Straight across',
+    text:(headSlope>22?'A distinctly sloping head line is the classical mark of an imaginative, creative mind — one that thinks in pictures, stories and possibilities. ':
+        headSlope>8?'A gently sloping head line balances practical thinking with imagination; you can plan and dream in equal measure. ':
+        'A straight head line indicates a practical, logical and business-like mind that prefers facts and clear structure. ')
+      +(headLen>0.85?'Its length shows depth of thought — you like to understand a subject thoroughly before acting.':
+        headLen>0.55?'Its moderate length shows a mind that grasps essentials quickly and moves on.':
+        'A short head line points to decisive, direct thinking — quick conclusions, little hesitation.')
+      +(headBow>0.2?' Its noticeable curve adds versatility and an ability to change approach mid-course.':'')};
+  // ---- Heart line
+  const heartLen=rel(m.heartLen), heartBow=m.heartBow, heartHigh=m.heartHigh;
+  R.heart={
+    len:heartLen>0.85?'Long':heartLen>0.55?'Moderate':'Short',
+    curve:heartBow>0.18?'Curved and rising':'Fairly straight',
+    text:(heartBow>0.18?'A curved, rising heart line is read as warm, expressive affection — you show feeling openly and value demonstrative love. ':
+        'A straighter heart line indicates feelings that are deep but privately held; you show love through loyalty and action rather than words. ')
+      +(heartLen>0.85?'Its length suggests a generous emotional nature that gives freely, sometimes more than it receives.':
+        heartLen>0.55?'Its length suggests a balanced heart — affectionate but self-possessed.':
+        'A shorter heart line points to selective attachment: few, but very strong bonds.')},
+  // ---- Fate line
+  R.fate=m.hasFate?{
+    text:(rel(m.fateLen)>0.7?'A long, well-formed fate line is the classical sign of a directed career — a sense of purpose that appears early and holds steady. Work tends to be a central pillar of the life.':
+      'A partial fate line suggests a career that finds its direction in stages; the path clarifies with experience rather than being fixed from the start.')
+      +(m.fateClarity>16?' Its depth points to strong staying power in professional matters.':'')}:
+    {text:'No fate line was traced. Traditionally this is not a negative sign — it indicates a self-directed life where the person makes their own path rather than following an obvious track, often with more freedom and variety in work.'};
+  // ---- Sun line
+  R.sun=m.hasSun?{text:'The presence of a sun (Apollo) line is read as a capacity for recognition — talent that becomes visible to others. It favours creative, public-facing or reputation-driven work.'}:
+    {text:'No sun line was traced, which is very common. Recognition then comes through sustained effort rather than early visibility.'};
+  // ---- Marriage
+  R.marriage=m.marriageCount>0?{text:'Traced '+m.marriageCount+' union line'+(m.marriageCount>1?'s':'')+'. Classical palmistry reads these as significant bonds and commitments rather than a literal count of marriages; the clearest line indicates the most defining relationship.'}:
+    {text:'No union lines were traced — these are often very fine. Read relationship indications from the heart line instead.'};
+  // ---- Hand shape
+  R.shape={type:m.shapeType,text:HAND_SHAPES[m.shapeType]};
+  // ---- Thumb
+  R.thumb={angle:Math.round(m.thumbAngle)+'°',
+    text:m.thumbAngle>75?'A widely set thumb indicates generosity, openness and an independent, adaptable temperament.':
+      m.thumbAngle>50?'A moderately set thumb shows balance between generosity and prudence — open, but not easily swayed.':
+      'A closely held thumb indicates carefulness with resources, strong self-control and a private nature.'};
+  // ---- Mounts (from marked mount prominence)
+  R.mounts=m.mounts||{};
+  // ---- Life areas summary
+  // area scores: baseline 3, adjusted up or down by what was actually measured
+  const clamp=v=>Math.max(1,Math.min(5,Math.round(v)));
+  const careerScore=3+(m.hasFate?1:0)+(m.hasSun?0.5:0)+(headSlope<10?0.5:0)+(headLen>0.8?0.5:0)-(headLen<0.5?1:0);
+  const relScore=3+(heartBow>0.18?1:0)+(heartLen>0.75?0.5:0)+(m.marriageCount>0?0.5:0)-(heartLen<0.5?1:0);
+  const healthScore=3+(lifeBow>0.22?1:0)+(m.lifeClarity>14?0.5:0)+(lifeLen>0.85?0.5:0)-(m.lifeClarity<7?1:0);
+  const persScore=3+(m.shapeType==='Fire'||m.shapeType==='Air'?1:0.5)+(m.thumbAngle>65?0.5:0);
+  R.areas={
+    Career:{score:clamp(careerScore),text:careerScore>=4?'Strong professional indications — direction, ambition and the ability to be recognised for your work.':'Career unfolds through personal initiative; formal structures matter less than freedom to work your own way.'},
+    Relationships:{score:clamp(relScore),text:relScore>=4?'Warm, expressive relating; you invest emotionally and are usually valued for it.':'Selective and steady in attachment; a small circle held for a long time.'},
+    Health:{score:clamp(healthScore),text:healthScore>=4?'Good constitutional indications — energy recovers well with rest.':'Energy benefits from routine, sleep and moderate exercise rather than intense bursts.'},
+    Personality:{score:clamp(persScore),text:HAND_SHAPES[m.shapeType]}};
+  // ---- strengths
+  const s=[];
+  if(headSlope>20) s.push('Creative imagination');
+  if(headSlope<10) s.push('Practical logic');
+  if(heartBow>0.18) s.push('Emotional warmth');
+  if(lifeBow>0.22) s.push('Physical vitality');
+  if(m.hasFate) s.push('Sense of purpose');
+  if(m.hasSun) s.push('Natural visibility');
+  if(m.thumbAngle>70) s.push('Generosity');
+  if(headLen>0.85) s.push('Depth of thought');
+  R.strengths=s.length?s:['Steadiness','Self-reliance'];
+  // ---- remedies (traditional)
+  R.remedies=[
+    'Keep the palms clean and the nails trimmed — classical texts treat care of the hands as care of the self.',
+    m.shapeType==='Earth'?'An Earth hand is advised to keep contact with soil and greenery — gardening or a morning walk on grass.':
+    m.shapeType==='Air'?'An Air hand is advised regular pranayama (breathing practice) to settle a busy mind.':
+    m.shapeType==='Water'?'A Water hand is advised offering water to the rising Sun and keeping a regular sleep hour.':
+    'A Fire hand is advised moderation in temper and a cooling diet during hot months.',
+    (m.lifeClarity<10?'A fine life line traditionally calls for a strengthening routine: warm food, oil massage (abhyanga) once a week, early nights.':'Weekly oil massage of the hands (abhyanga) is the classical practice for maintaining vitality.'),
+    'Charity with the right hand on the weekday of your strongest mount is the traditional remedy for strengthening its qualities.'];
+  return R; }
+function palmMonthly(m,monthDate){
+  // Traditional-style monthly outlook derived from the traced hand + the month asked about.
+  const mo=monthDate.getMonth(), yr=monthDate.getFullYear();
+  const seed=(mo+1)*7+(yr%100)+Math.round(m.lifeBow*100)+Math.round(m.headSlope);
+  const pick=(arr,off)=>arr[(seed+off)%arr.length];
+  return {
+    focus:pick(['work and responsibility','home and family','learning and travel','money and resources','health and routine','friendship and community'],0),
+    caution:pick(['avoid hasty promises','guard against overwork','watch expenses on non-essentials','give rest to the eyes and mind','avoid arguments with elders','do not lend what you cannot spare'],3),
+    favour:pick(['the second and third weeks','the first and last weeks','the middle of the month','the closing ten days'],5),
+    day:pick(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],2),
+    colour:pick(['White','Yellow','Green','Red','Blue','Cream','Saffron'],4)};
+}
+</script>
+<script>
+/* ================= FACE READING (objective geometry) ================= */
+const FACE_POINTS=[
+ ['hairline','Hairline centre','Centre of the hairline at the top of the forehead.'],
+ ['browL','Left eyebrow inner','Inner end of the left eyebrow (your left).'],
+ ['browR','Right eyebrow inner','Inner end of the right eyebrow.'],
+ ['eyeLout','Left eye outer','Outer corner of the left eye.'],
+ ['eyeLin','Left eye inner','Inner corner of the left eye.'],
+ ['eyeRin','Right eye inner','Inner corner of the right eye.'],
+ ['eyeRout','Right eye outer','Outer corner of the right eye.'],
+ ['noseT','Nose top','Bridge of the nose between the eyes.'],
+ ['noseB','Nose base','Bottom centre of the nose.'],
+ ['noseL','Nose left wing','Left edge of the nostril.'],
+ ['noseR','Nose right wing','Right edge of the nostril.'],
+ ['lipT','Upper lip centre','Centre of the upper lip line.'],
+ ['lipB','Lower lip bottom','Bottom edge of the lower lip.'],
+ ['mouthL','Mouth left','Left corner of the mouth.'],
+ ['mouthR','Mouth right','Right corner of the mouth.'],
+ ['jawL','Jaw left','Widest point of the jaw on the left.'],
+ ['jawR','Jaw right','Widest point of the jaw on the right.'],
+ ['cheekL','Cheekbone left','Widest point of the left cheekbone.'],
+ ['cheekR','Cheekbone right','Widest point of the right cheekbone.'],
+ ['chin','Chin bottom','Lowest point of the chin.']];
+function faceMetrics(P){
+  const need=k=>P[k];
+  if(!P.hairline||!P.chin||!P.jawL||!P.jawR||!P.cheekL||!P.cheekR) return null;
+  const faceH=dist(P.hairline,P.chin);
+  const jawW=dist(P.jawL,P.jawR), cheekW=dist(P.cheekL,P.cheekR);
+  const M={};
+  M.faceH=faceH; M.jawW=jawW; M.cheekW=cheekW;
+  M.ratioHW=faceH/cheekW;
+  M.jawCheek=jawW/cheekW;
+  // face shape
+  let shape;
+  if(M.ratioHW>1.5) shape= M.jawCheek>0.92?'Rectangular (long)':'Oblong / Oval';
+  else if(M.ratioHW>1.25) shape= M.jawCheek>0.9?'Square-oval':'Oval';
+  else shape= M.jawCheek>0.9?'Square':'Round';
+  if(M.jawCheek<0.72) shape='Heart / Inverted triangle';
+  M.shape=shape;
+  // thirds
+  if(P.browL&&P.browR&&P.noseB){
+    const browY=(P.browL.y+P.browR.y)/2;
+    M.upper=(browY-P.hairline.y)/faceH;
+    M.middle=(P.noseB.y-browY)/faceH;
+    M.lower=(P.chin.y-P.noseB.y)/faceH; }
+  // eye spacing
+  if(P.eyeLin&&P.eyeRin&&P.eyeLout&&P.eyeRout){
+    const gap=dist(P.eyeLin,P.eyeRin);
+    const eyeW=(dist(P.eyeLout,P.eyeLin)+dist(P.eyeRout,P.eyeRin))/2;
+    M.eyeGapRatio=gap/eyeW;
+    M.eyeWidthRel=eyeW/cheekW; }
+  // nose
+  if(P.noseT&&P.noseB&&P.noseL&&P.noseR){
+    M.noseLen=dist(P.noseT,P.noseB)/faceH;
+    M.noseW=dist(P.noseL,P.noseR)/cheekW;
+    M.noseRatio=dist(P.noseL,P.noseR)/dist(P.noseT,P.noseB); }
+  // lips
+  if(P.lipT&&P.lipB&&P.mouthL&&P.mouthR){
+    M.lipH=dist(P.lipT,P.lipB)/faceH;
+    M.mouthW=dist(P.mouthL,P.mouthR)/cheekW;
+    M.mouthTilt=ang(P.mouthL,P.mouthR); }
+  // chin
+  if(P.lipB&&P.chin) M.chinLen=dist(P.lipB,P.chin)/faceH;
+  // symmetry: compare left/right distances from the vertical midline
+  const mid={x:(P.hairline.x+P.chin.x)/2,y:0};
+  const pairs=[['eyeLout','eyeRout'],['jawL','jawR'],['cheekL','cheekR'],['mouthL','mouthR'],['noseL','noseR']];
+  let diffs=[],n=0;
+  pairs.forEach(([a,b])=>{ if(P[a]&&P[b]){
+    const dl=Math.abs(mid.x-P[a].x), dr=Math.abs(P[b].x-mid.x);
+    diffs.push(Math.abs(dl-dr)/((dl+dr)/2||1)); n++; } });
+  M.symmetry=n? Math.max(0,100-(diffs.reduce((a,b)=>a+b,0)/n)*100) : null;
+  return M; }
+const FACE_TEXT={
+ shape:{'Round':'A rounded face is traditionally associated with a sociable, adaptable and approachable nature — someone who gets on easily with others and dislikes conflict.',
+  'Square':'A square face is read as determination and practicality: a decisive person who is trusted to get things finished.',
+  'Square-oval':'A square-oval face blends determination with diplomacy — firm in aim, flexible in method.',
+  'Oval':'An oval face is read as balance and courtesy — a harmonising presence with good social judgement.',
+  'Oblong / Oval':'A longer oval face is associated with thoughtfulness and planning — a person who considers before committing.',
+  'Rectangular (long)':'A long rectangular face is read as methodical and enduring — steady application over long periods.',
+  'Heart / Inverted triangle':'A heart-shaped face, broad at the cheekbones and fine at the jaw, is read as quick intelligence and sensitivity, with strong intuition.'},
+ thirds:{upper:'a well-developed upper third, read traditionally as strong reasoning and early learning',
+   middle:'a prominent middle third, read as drive and social confidence in the middle years',
+   lower:'a strong lower third, read as endurance, family orientation and steadiness in later years'},
+ eyeWide:'Widely spaced eyes are read as a broad, tolerant outlook — big-picture thinking and an easy-going view of others.',
+ eyeClose:'Closely set eyes are read as focus and concentration — attention to detail and strong powers of application.',
+ eyeMid:'Evenly spaced eyes are read as balanced judgement — neither lost in detail nor careless of it.',
+ noseLong:'A longer nose is traditionally linked with pride in work and careful management of resources.',
+ noseShort:'A shorter nose is linked with spontaneity and an easy-going attitude to money.',
+ noseWide:'A broader nose is read as generosity and an ability to gather resources.',
+ noseNarrow:'A narrower nose is read as refinement and careful selectivity.',
+ lipFull:'Fuller lips are read as expressiveness, warmth and enjoyment of good company.',
+ lipThin:'Finer lips are read as discretion, precision of speech and self-containment.',
+ mouthWide:'A wide mouth is read as generosity of spirit and natural ease in speaking to groups.',
+ chinStrong:'A well-defined chin is read as willpower and staying power in difficulty.',
+ chinFine:'A finer chin is read as sensitivity and diplomacy rather than confrontation.'};
+function faceReading(M){
+  const out=[];
+  out.push({h:'Face shape',v:M.shape,t:FACE_TEXT.shape[M.shape]||''});
+  if(M.upper!=null){
+    const t=[['upper',M.upper],['middle',M.middle],['lower',M.lower]].sort((a,b)=>b[1]-a[1])[0][0];
+    out.push({h:'Facial thirds',v:'Upper '+Math.round(M.upper*100)+'% · Middle '+Math.round(M.middle*100)+'% · Lower '+Math.round(M.lower*100)+'%',
+      t:'The three zones are close to even in a balanced face. Yours shows '+FACE_TEXT.thirds[t]+'.'}); }
+  if(M.eyeGapRatio!=null){
+    const v=M.eyeGapRatio;
+    out.push({h:'Eye spacing',v:v.toFixed(2)+' × eye width',
+      t:v>1.15?FACE_TEXT.eyeWide:v<0.85?FACE_TEXT.eyeClose:FACE_TEXT.eyeMid}); }
+  if(M.noseLen!=null){
+    out.push({h:'Nose',v:'Length '+Math.round(M.noseLen*100)+'% of face · width ratio '+M.noseRatio.toFixed(2),
+      t:(M.noseLen>0.30?FACE_TEXT.noseLong:FACE_TEXT.noseShort)+' '+(M.noseRatio>0.85?FACE_TEXT.noseWide:FACE_TEXT.noseNarrow)}); }
+  if(M.lipH!=null){
+    out.push({h:'Lips &amp; mouth',v:'Lip height '+Math.round(M.lipH*100)+'% · mouth width '+Math.round(M.mouthW*100)+'% of face width',
+      t:(M.lipH>0.075?FACE_TEXT.lipFull:FACE_TEXT.lipThin)+(M.mouthW>0.45?' '+FACE_TEXT.mouthWide:'')}); }
+  if(M.chinLen!=null){
+    out.push({h:'Chin &amp; jaw',v:'Chin '+Math.round(M.chinLen*100)+'% of face · jaw/cheek '+M.jawCheek.toFixed(2),
+      t:(M.jawCheek>0.88?FACE_TEXT.chinStrong:FACE_TEXT.chinFine)}); }
+  if(M.symmetry!=null){
+    out.push({h:'Symmetry',v:M.symmetry.toFixed(1)+'%',
+      t:'Measured from the points you marked. Every real face is asymmetric; values above 90% are usual for a well-aligned photograph. This is a measurement of your marking, not a judgement of appearance.'}); }
+  return out; }
+</script>
+<script>
+/* ================= NUMEROLOGY ================= */
+const PYTH={A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,
+ S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+const CHALD={A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,
+ S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
+const VOWELS='AEIOU';
+function reduceNum(n,keepMaster){
+  const M=[11,22,33];
+  while(n>9){ if(keepMaster&&M.includes(n)) return n;
+    n=String(n).split('').reduce((a,d)=>a+ +d,0); }
+  return n; }
+function letterSum(name,sys,filter){
+  const T=sys==='chaldean'?CHALD:PYTH;
+  let s=0;
+  for(const ch of name.toUpperCase()){
+    if(!/[A-Z]/.test(ch)) continue;
+    if(filter==='vowel'&&!VOWELS.includes(ch)) continue;
+    if(filter==='consonant'&&VOWELS.includes(ch)) continue;
+    s+=T[ch]||0; }
+  return s; }
+function numerologyProfile(name,dobStr,sys,refDate){
+  const [y,m,d]=dobStr.split('-').map(Number);
+  const P={};
+  P.lifePath=reduceNum(reduceNum(d,true)+reduceNum(m,true)+reduceNum(String(y).split('').reduce((a,c)=>a+ +c,0),true),true);
+  P.destiny=reduceNum(letterSum(name,sys),true);
+  P.soul=reduceNum(letterSum(name,sys,'vowel'),true);
+  P.personality=reduceNum(letterSum(name,sys,'consonant'),true);
+  P.birthday=reduceNum(d,true);
+  P.maturity=reduceNum(reduceNum(P.lifePath)+reduceNum(P.destiny),true);
+  const ref=refDate||new Date();
+  const cy=ref.getFullYear(), cm=ref.getMonth()+1, cd=ref.getDate();
+  P.personalYear=reduceNum(reduceNum(d)+reduceNum(m)+reduceNum(String(cy).split('').reduce((a,c)=>a+ +c,0)));
+  P.personalMonth=reduceNum(P.personalYear+reduceNum(cm));
+  P.personalDay=reduceNum(P.personalMonth+reduceNum(cd));
+  // Pinnacles
+  const rd=reduceNum(d), rm=reduceNum(m), ry=reduceNum(String(y).split('').reduce((a,c)=>a+ +c,0));
+  P.pinnacles=[reduceNum(rm+rd,true),reduceNum(rd+ry,true),
+    reduceNum(reduceNum(rm+rd)+reduceNum(rd+ry),true),reduceNum(rm+ry,true)];
+  const p1End=36-reduceNum(P.lifePath);
+  P.pinnacleAges=[[0,p1End],[p1End+1,p1End+9],[p1End+10,p1End+18],[p1End+19,'onward']];
+  // Challenges
+  P.challenges=[Math.abs(rm-rd),Math.abs(rd-ry),Math.abs(Math.abs(rm-rd)-Math.abs(rd-ry)),Math.abs(rm-ry)];
+  P.age=cy-y-((cm<m||(cm===m&&cd<d))?1:0);
+  P.currentPinnacle=P.pinnacleAges.findIndex((a,i)=>P.age>=a[0]&&(a[1]==='onward'||P.age<=a[1]));
+  return P; }
+const NUM_MEAN={
+ 1:{k:'The Leader',t:'Independent, original and self-starting. You are happiest when directing your own course and pioneering something new.',
+    career:'Business ownership, management, administration, defence, surgery, anything where you set the direction.',
+    rel:'Needs a partner who respects independence; pairs well with 2, 3, 5 and 6.',col:'Golden yellow, orange, copper',day:'Sunday',luck:'1, 10, 19, 28'},
+ 2:{k:'The Diplomat',t:'Cooperative, sensitive and receptive. You work best in partnership and have a natural gift for smoothing differences.',
+    career:'Counselling, teaching, HR, nursing, diplomacy, partnership businesses, hospitality.',
+    rel:'Deeply loyal and considerate; pairs well with 1, 4, 8 and 9.',col:'White, cream, pale green',day:'Monday',luck:'2, 11, 20, 29'},
+ 3:{k:'The Expressive',t:'Creative, sociable and optimistic. Communication in any form — speech, writing, art — is your natural channel.',
+    career:'Teaching, writing, media, law, advisory work, arts, marketing, priesthood or scholarship.',
+    rel:'Warm and demonstrative; pairs well with 1, 5, 6 and 9.',col:'Yellow, saffron, gold',day:'Thursday',luck:'3, 12, 21, 30'},
+ 4:{k:'The Builder',t:'Practical, methodical and dependable. You create order and lasting structures, and dislike shortcuts.',
+    career:'Engineering, construction, accounts, administration, land and property, systems and process work.',
+    rel:'Steady and protective; pairs well with 2, 6, 7 and 8.',col:'Grey, khaki, electric blue',day:'Saturday',luck:'4, 13, 22, 31'},
+ 5:{k:'The Free Spirit',t:'Versatile, quick and adaptable. Variety, movement and communication keep you at your best; routine dulls you.',
+    career:'Sales, travel, journalism, trading, IT, consultancy, public relations, transport.',
+    rel:'Lively and companionable; pairs well with 1, 3, 6 and 9.',col:'Green, light shades',day:'Wednesday',luck:'5, 14, 23'},
+ 6:{k:'The Nurturer',t:'Responsible, harmonising and family-centred. You carry the welfare of others naturally and value beauty in life.',
+    career:'Medicine, hospitality, teaching, interior design, food, fashion, jewellery, service to family businesses.',
+    rel:'Devoted and home-loving; pairs well with 2, 3, 4 and 9.',col:'White, pastel blue, pink',day:'Friday',luck:'6, 15, 24'},
+ 7:{k:'The Seeker',t:'Reflective, analytical and inward. You need solitude to think, and you are drawn to what lies beneath the surface.',
+    career:'Research, analysis, spirituality, medicine, law, teaching, technology, investigation, writing.',
+    rel:'Needs space and depth; pairs well with 2, 4 and 7.',col:'Sea green, smoky shades',day:'Monday',luck:'7, 16, 25'},
+ 8:{k:'The Executive',t:'Ambitious, disciplined and resilient. Material achievement comes through sustained, patient effort rather than luck.',
+    career:'Finance, industry, law, real estate, administration, mining, large-scale organisation.',
+    rel:'Reliable and protective, sometimes reserved; pairs well with 2, 4 and 6.',col:'Dark blue, black, deep brown',day:'Saturday',luck:'8, 17, 26'},
+ 9:{k:'The Humanitarian',t:'Generous, courageous and idealistic. You are moved by causes larger than yourself and give freely.',
+    career:'Medicine, defence, social work, law, teaching, sports, public service, spiritual work.',
+    rel:'Warm and forgiving; pairs well with 1, 3, 5 and 6.',col:'Red, crimson, maroon',day:'Tuesday',luck:'9, 18, 27'},
+ 11:{k:'Master Number — The Illuminator',t:'A master number carrying the qualities of 2 raised to inspiration. Intuitive, idealistic and inspiring to others, with sensitivity that needs grounding.',
+    career:'Teaching, counselling, spiritual work, arts, public speaking, healing professions.',
+    rel:'Idealistic in love and needs an understanding partner.',col:'White, silver, pale blue',day:'Monday',luck:'2, 11, 20, 29'},
+ 22:{k:'Master Number — The Master Builder',t:'The most powerful of the master numbers: the vision of 11 with the practicality of 4. Capable of building something of lasting public value.',
+    career:'Large enterprise, institution-building, architecture, public projects, reform work.',
+    rel:'Devoted but often absorbed in the work; needs a patient partner.',col:'Grey, white, russet',day:'Saturday',luck:'4, 13, 22, 31'},
+ 33:{k:'Master Number — The Teacher',t:'The number of selfless service and teaching. Great responsibility for others, carried with warmth.',
+    career:'Teaching, healing, philanthropy, counselling, community leadership.',
+    rel:'Giving to the point of self-sacrifice; needs to keep something for itself.',col:'White, rose, pale gold',day:'Friday',luck:'6, 15, 24, 33'}};
+const YEAR_MEAN={1:'A year of beginnings — plant seeds, start ventures, take initiative. What starts now sets the tone for nine years.',
+ 2:'A year of patience and partnership — cooperate, build relationships, let matters develop rather than forcing them.',
+ 3:'A year of expression and social growth — creativity, communication, travel and enjoyment. Good for making yourself known.',
+ 4:'A year of hard work and consolidation — systems, property, discipline. Foundations laid now hold for a long time.',
+ 5:'A year of change and movement — travel, new contacts, freedom. Avoid binding yourself with rigid commitments.',
+ 6:'A year of home, family and responsibility — marriage, property, care of others, and matters of beauty.',
+ 7:'A year of reflection and study — go inward, learn, research, rest. Not a year to force material expansion.',
+ 8:'A year of achievement and money — business, recognition, authority. Effort meets reward if the work is honest.',
+ 9:'A year of completion — finish what is unfinished, release what has served its purpose, prepare for a new cycle.'};
+const CHALLENGE_MEAN={0:'No specific challenge — you meet difficulties with a free hand, but must supply your own discipline.',
+ 1:'The challenge of independence — learning to stand alone without domineering, and to assert yourself without aggression.',
+ 2:'The challenge of sensitivity — learning not to take things personally, and to cooperate without losing yourself.',
+ 3:'The challenge of expression — learning to speak your mind clearly and not scatter energy in too many directions.',
+ 4:'The challenge of discipline — learning steady application and patience with detail rather than avoiding hard work.',
+ 5:'The challenge of freedom — learning to use liberty responsibly and avoid restlessness or excess.',
+ 6:'The challenge of responsibility — learning to serve family and others without becoming controlling or self-sacrificing.',
+ 7:'The challenge of faith — learning to trust, to overcome doubt and isolation, and to share what you understand.',
+ 8:'The challenge of material balance — learning a healthy relationship with money and power, neither fearing nor worshipping it.'};
+/* ---- Tools ---- */
+function nameNumber(n,sys){ return reduceNum(letterSum(n,sys),true); }
+function compatibility(n1,n2){
+  const a=reduceNum(n1),b=reduceNum(n2);
+  const FRIEND={1:[1,2,3,5,6,9],2:[1,2,4,7,8],3:[1,3,5,6,7,9],4:[2,4,6,7,8],5:[1,3,5,6,7,9],
+   6:[1,2,3,4,5,6,9],7:[2,3,4,5,7],8:[2,4,6,8],9:[1,3,5,6,9]};
+  const same=a===b;
+  const good=FRIEND[a]&&FRIEND[a].includes(b);
+  const mutual=good&&FRIEND[b]&&FRIEND[b].includes(a);
+  let score = mutual?(same?85:90):good?72:55;
+  if(Math.abs(a-b)===0&&[4,8].includes(a)) score-=10;
+  return {a,b,score,verdict:score>=85?'Excellent harmony':score>=70?'Good, workable harmony':'Mixed — needs conscious effort'};}
+function digitsOf(str){ return (str.match(/\d/g)||[]).map(Number); }
+function numberAnalysis(str,sys){
+  const d=digitsOf(str);
+  if(!d.length) return null;
+  const total=d.reduce((a,b)=>a+b,0);
+  return {total,root:reduceNum(total),count:d.length}; }
+const VEHICLE_MEAN={1:'Authority and visibility on the road; suits a leader’s vehicle. Drive with patience.',
+ 2:'A gentle, family-friendly vibration. Good for a shared or family car.',
+ 3:'Cheerful and social — a vehicle used for outings and journeys with friends.',
+ 4:'Steady and durable; excellent for a work vehicle or long-term ownership.',
+ 5:'Movement and frequent travel — ideal for those constantly on the road; keep speed in check.',
+ 6:'Comfort, beauty and family use — a fortunate number for a household vehicle.',
+ 7:'Reflective and private; suits solitary travel. Keep maintenance regular.',
+ 8:'Heavy, serious vibration — good for commercial vehicles; requires disciplined driving and insurance.',
+ 9:'Energy and speed — powerful, but demands caution and restraint from the driver.'};
+const HOUSE_MEAN={1:'A home for independent people and new beginnings; good for a first home or a person starting out.',
+ 2:'A peaceful, harmonious home — excellent for couples and for family life.',
+ 3:'A joyful, social home where guests gather; good for creative people and families with children.',
+ 4:'A solid, secure home — excellent for long-term settlement and for building savings.',
+ 5:'A busy, changeful home; suits travellers, tenants and people whose work keeps them moving.',
+ 6:'The most auspicious for family life — warmth, care and beauty; excellent for joint families.',
+ 7:'A quiet, contemplative home; ideal for study, research and spiritual practice, less so for large gatherings.',
+ 8:'A home connected with money and status; supports business but demands discipline and order.',
+ 9:'A generous, open home; welcoming to many, with charitable and humanitarian activity.'};
+const MOBILE_MEAN={1:'Supports leadership and personal branding — good for entrepreneurs.',
+ 2:'Supports diplomacy and partnership dealings; a gentle number for personal use.',
+ 3:'Excellent for teaching, sales, media and any work built on conversation.',
+ 4:'Steady and reliable; good for administration, service and technical work.',
+ 5:'The trader’s number — excellent for sales, marketing and constant contact.',
+ 6:'Good for family, hospitality, medicine and beauty-related work.',
+ 7:'Suits research, analysis and specialised professional practice; quieter for sales.',
+ 8:'Strong for finance, property and large business; can feel heavy for casual personal use.',
+ 9:'Energetic and wide-reaching; good for public work, service and causes.'};
+const BABY_NAMES={
+ 1:{M:['Aditya','Arjun','Ravi','Surya','Vikram','Ishaan','Aarav'],F:['Aditi','Anaya','Rajni','Surabhi','Vidya','Ira']},
+ 2:{M:['Chandra','Soman','Nirav','Manas','Shashank'],F:['Chandni','Rohini','Meera','Nisha','Sumati']},
+ 3:{M:['Guru','Brihas','Devesh','Vachan','Girish','Yash'],F:['Gayatri','Devika','Vani','Jaya','Saraswati']},
+ 4:{M:['Rahul','Kabir','Bhuvan','Dhruv','Nakul'],F:['Bhoomi','Dhara','Kavya','Ruhi','Nandini']},
+ 5:{M:['Budh','Vipul','Sarthak','Chetan','Naman'],F:['Vidhi','Charu','Sanya','Nitya','Mansi']},
+ 6:{M:['Shukra','Rohan','Harsh','Kunal','Vihaan'],F:['Shreya','Radha','Kanika','Aarohi','Lakshmi']},
+ 7:{M:['Ketan','Anand','Shiv','Amrit','Nirvan'],F:['Ketki','Anandi','Shivani','Trisha','Amrita']},
+ 8:{M:['Shani','Kartik','Bhaskar','Girik','Sameer'],F:['Kartika','Bhavya','Sarika','Damini','Tanvi']},
+ 9:{M:['Mangal','Veer','Ajay','Tejas','Karan','Agni'],F:['Mangala','Veera','Tejaswini','Ojaswini','Rudrani']}};
+function luckyDates(lifePath){
+  const base=reduceNum(lifePath);
+  const out=[];
+  for(let d=1;d<=31;d++){ if(reduceNum(d)===base||reduceNum(d)===reduceNum(base+9)) out.push(d); }
+  return out; }
+function goodLaunchDates(numTarget,fromDate,count){
+  const out=[]; const d=new Date(fromDate);
+  for(let i=0;i<400&&out.length<count;i++){
+    d.setDate(d.getDate()+1);
+    const dd=d.getDate(), mm=d.getMonth()+1, yy=d.getFullYear();
+    const sum=reduceNum(reduceNum(dd)+reduceNum(mm)+reduceNum(String(yy).split('').reduce((a,c)=>a+ +c,0)));
+    if(sum===numTarget) out.push({date:new Date(d),day:sum,dateNum:reduceNum(dd)});
+  }
+  return out; }
+function nameSpellings(name,target,sys){
+  // suggest simple spelling variants whose destiny number matches the target
+  const base=name.trim(); if(!base) return [];
+  const variants=new Set();
+  const words=base.split(/\s+/);
+  const tweaks=[s=>s, s=>s+'a', s=>s+'h', s=>s.replace(/a$/i,'aa'), s=>s.replace(/i$/i,'ee'),
+    s=>s.replace(/^([A-Za-z])/,(m)=>m+m.toLowerCase()), s=>s+'e', s=>s.replace(/u/i,'oo')];
+  tweaks.forEach(t1=>tweaks.forEach(t2=>{
+    const v=words.map((w,i)=>i===0?t1(w):(i===words.length-1?t2(w):w)).join(' ');
+    if(v!==base&&nameNumber(v,sys)===target) variants.add(v); }));
+  return [...variants].slice(0,8); }
+</script>
+<script>
+/* ================= PALM TAB UI ================= */
+let palmStage=null, palmHand='right', palmRefs={};
+function renderPalmTab(){
+  let h='<div class="card"><h2>🖐 Palmistry — trace your palm</h2>';
+  h+='<div class="help"><b>How this works:</b> take a clear, well-lit photo of your open palm (or upload one), then trace each line with your finger or mouse. The app <b>measures</b> the real length, curve and clarity of what you trace, and gives the traditional palmistry reading for those measurements. Nothing is uploaded anywhere — the photo stays on your device.</div>';
+  h+='<div class="grid g3">'
+    +'<div><label>Which hand?</label><select id="palmHand"><option value="right">Right (dominant — present &amp; future)</option><option value="left">Left (non-dominant — inherited traits)</option></select></div>'
+    +'<div><label>Palm photo</label><input type="file" id="palmFile" accept="image/*"></div>'
+    +'<div style="display:flex;align-items:end"><button class="small ghost" style="width:100%" onclick="resetPalm()">Clear tracing</button></div></div>';
+  h+='<div id="palmStageBox" style="text-align:center;margin-top:14px"></div>';
+  h+='<div id="palmControls" style="display:none">';
+  h+='<h3>1. Trace the lines</h3><div class="steps" id="palmSteps"></div>';
+  h+='<p class="note" id="palmHint">Choose a line below, then draw along it on the photo.</p>';
+  h+='<div class="grid g3" id="palmLineBtns" style="margin-top:8px"></div>';
+  h+='<h3>2. Mark the hand outline (for shape &amp; thumb)</h3>';
+  h+='<p class="note">Choose each point, then tap it on the photo.</p>';
+  h+='<div class="grid g3" id="palmPointBtns" style="margin-top:8px"></div>';
+  h+='<div style="margin-top:16px"><button onclick="doPalmReading()">📜 Generate Reading</button></div></div>';
+  h+='<div id="palmOut"></div>';
+  h+='<div class="disclaim"><b>Please note:</b> palmistry is a traditional cultural practice offered here for interest and self-reflection. Readings are interpretations of the shapes you trace, not medical, financial or factual predictions.</div></div>';
+  el('pane-palm').innerHTML=h;
+  const box=el('palmStageBox');
+  palmStage=makeStage(box,()=>{ el('palmControls').style.display='block'; updatePalmSteps(); });
+  palmStage.onDone=updatePalmSteps;
+  el('palmFile').onchange=e=>{ if(e.target.files[0]) palmStage.load(e.target.files[0]); };
+  el('palmHand').onchange=e=>palmHand=e.target.value;
+  // line buttons
+  el('palmLineBtns').innerHTML=PALM_LINES.map(([k,n,d])=>
+    '<button class="small ghost" data-line="'+k+'" onclick="pickLine(\''+k+'\')">'+n+'</button>').join('');
+  const PTS=[['wristL','Wrist edge (thumb side)'],['wristR','Wrist edge (little-finger side)'],
+    ['top','Base of middle finger'],['fingerTip','Tip of middle finger'],
+    ['thumbBase','Base of thumb'],['thumbTip','Tip of thumb']];
+  el('palmPointBtns').innerHTML=PTS.map(([k,n])=>
+    '<button class="small ghost" onclick="pickPalmPoint(\''+k+'\',\''+n+'\')">'+n+'</button>').join('');
+  palmRefs={};
+}
+function pickLine(k){
+  palmStage.current=k; palmStage.mode='draw';
+  const L=PALM_LINES.find(x=>x[0]===k);
+  el('palmHint').innerHTML='<b style="color:var(--gold2)">'+L[1]+':</b> '+L[2]+' — now draw along it on the photo.';
+  document.querySelectorAll('#palmLineBtns button').forEach(b=>b.style.borderColor=b.dataset.line===k?'var(--gold2)':'var(--gold)');
+}
+function pickPalmPoint(k,n){
+  palmStage.current=null;
+  el('palmHint').innerHTML='<b style="color:var(--gold2)">'+n+':</b> tap that point on the photo.';
+  palmStage.awaitPoint=k;
+  if(!palmStage._ptHandler){
+    palmStage._ptHandler=e=>{ if(!palmStage.awaitPoint) return;
+      const r=palmStage.cv.getBoundingClientRect();
+      palmRefs[palmStage.awaitPoint]={x:(e.clientX-r.left)*palmStage.W/r.width,y:(e.clientY-r.top)*palmStage.H/r.height};
+      palmStage.awaitPoint=null; drawPalmRefs(); updatePalmSteps(); };
+    palmStage.cv.addEventListener('click',palmStage._ptHandler); }
+}
+function drawPalmRefs(){
+  palmStage.redraw();
+  const c=palmStage.ctx;
+  for(const k in palmRefs){ const p=palmRefs[k];
+    c.save(); c.fillStyle='rgba(242,205,126,.8)'; c.strokeStyle='#12100f'; c.lineWidth=2;
+    c.beginPath(); c.arc(p.x,p.y,5,0,7); c.fill(); c.stroke(); c.restore(); }
+}
+function updatePalmSteps(){
+  drawPalmRefsSafe();
+  const done=PALM_LINES.filter(([k])=>palmStage.paths[k]).map(([,n])=>n);
+  const need=['life','head','heart'].filter(k=>!palmStage.paths[k]);
+  let h='';
+  PALM_LINES.forEach(([k,n])=>{ h+='<span class="'+(palmStage.paths[k]?'done':'')+'">'+(palmStage.paths[k]?'✓ ':'')+n+'</span>'; });
+  const ptDone=Object.keys(palmRefs).length;
+  h+='<span class="'+(ptDone>=4?'done':'')+'">'+(ptDone>=4?'✓ ':'')+'Outline points ('+ptDone+'/6)</span>';
+  el('palmSteps').innerHTML=h;
+}
+function drawPalmRefsSafe(){ if(palmStage&&palmStage.img&&Object.keys(palmRefs).length) drawPalmRefs(); }
+function resetPalm(){ if(!palmStage) return; palmStage.paths={}; palmRefs={}; palmStage.redraw(); updatePalmSteps(); el('palmOut').innerHTML=''; }
+function doPalmReading(){
+  const P=palmStage.paths;
+  if(!P.life||!P.head||!P.heart){ toast('Please trace at least the life, head and heart lines'); return; }
+  const R=palmRefs;
+  // measurements
+  const palmW = (R.wristL&&R.wristR)? dist(R.wristL,R.wristR) : palmStage.W*0.6;
+  const palmH = (R.wristL&&R.top)? dist({x:(R.wristL.x+(R.wristR?R.wristR.x:R.wristL.x))/2,y:(R.wristL.y+(R.wristR?R.wristR.y:R.wristL.y))/2},R.top) : palmStage.H*0.55;
+  const fingerLen = (R.top&&R.fingerTip)? dist(R.top,R.fingerTip) : palmH*0.85;
+  const thumbAngle = (R.thumbBase&&R.thumbTip&&R.wristL)?
+    Math.abs(ang(R.thumbBase,R.thumbTip)-ang(R.thumbBase,R.top||R.wristL)) : 60;
+  const m={
+    palmW,palmH,
+    lifeLen:polylineLen(P.life), lifeBow:bow(P.life), lifeClarity:pathContrast(palmStage.ctx,P.life,palmStage.W,palmStage.H),
+    headLen:polylineLen(P.head), headBow:bow(P.head),
+    headSlope:Math.abs(ang(P.head[0],P.head[P.head.length-1])),
+    heartLen:polylineLen(P.heart), heartBow:bow(P.heart), heartHigh:P.heart[0].y/palmStage.H,
+    hasFate:!!P.fate, fateLen:P.fate?polylineLen(P.fate):0,
+    fateClarity:P.fate?pathContrast(palmStage.ctx,P.fate,palmStage.W,palmStage.H):0,
+    hasSun:!!P.sun, marriageCount:P.marriage?Math.max(1,Math.round(polylineLen(P.marriage)/(palmH*0.12))):0,
+    shapeType:classifyHand(palmW,palmH,fingerLen),
+    thumbAngle:Math.min(110,Math.max(20,thumbAngle))};
+  const Rd=palmReading(m);
+  const mo=palmMonthly(m,new Date());
+  let h='<h3 style="margin-top:20px">Your palm reading — '+(palmHand==='right'?'right hand':'left hand')+'</h3>';
+  h+='<p class="note">'+(palmHand==='right'?'The dominant hand is traditionally read for the life you are making — present and future.':'The non-dominant hand is traditionally read for inherited nature and early life.')+'</p>';
+  h+='<div class="grid g2" style="margin-top:12px"><div>';
+  h+='<div class="metric"><span>Hand type</span><b>'+m.shapeType+'</b></div>';
+  h+='<div class="metric"><span>Life line</span><b>'+Rd.life.len+' · '+Rd.life.curve+'</b></div>';
+  h+='<div class="metric"><span>Head line</span><b>'+Rd.head.len+' · '+Rd.head.slope+'</b></div>';
+  h+='<div class="metric"><span>Heart line</span><b>'+Rd.heart.len+' · '+Rd.heart.curve+'</b></div>';
+  h+='<div class="metric"><span>Fate line</span><b>'+(m.hasFate?'Present':'Not traced')+'</b></div>';
+  h+='<div class="metric"><span>Sun line</span><b>'+(m.hasSun?'Present':'Not traced')+'</b></div>';
+  h+='<div class="metric"><span>Thumb angle</span><b>'+Rd.thumb.angle+'</b></div>';
+  h+='</div><div>';
+  for(const a in Rd.areas) h+='<div class="metric"><span>'+a+'</span><b>'+'★'.repeat(Rd.areas[a].score)+'☆'.repeat(5-Rd.areas[a].score)+'</b></div>';
+  h+='<div style="margin-top:10px"><b style="color:var(--gold2)">Strengths:</b><br>'+Rd.strengths.map(s=>'<span class="pill">'+s+'</span>').join('')+'</div>';
+  h+='</div></div>';
+  h+='<h3>Line by line</h3>';
+  h+='<p class="readout"><b style="color:#7fbf6a">Life line —</b> '+Rd.life.text+'</p>';
+  h+='<p class="readout"><b style="color:#f2cd7e">Head line —</b> '+Rd.head.text+'</p>';
+  h+='<p class="readout"><b style="color:#d96a5a">Heart line —</b> '+Rd.heart.text+'</p>';
+  h+='<p class="readout"><b style="color:#7ab7d9">Fate line —</b> '+Rd.fate.text+'</p>';
+  h+='<p class="readout"><b style="color:#e0a3f0">Sun line —</b> '+Rd.sun.text+'</p>';
+  h+='<p class="readout"><b>Union lines —</b> '+Rd.marriage.text+'</p>';
+  h+='<p class="readout"><b>Hand shape ('+m.shapeType+') —</b> '+Rd.shape.text+'</p>';
+  h+='<p class="readout"><b>Thumb —</b> '+Rd.thumb.text+'</p>';
+  h+='<h3>Life areas</h3>';
+  for(const a in Rd.areas) h+='<p class="readout"><b>'+a+':</b> '+Rd.areas[a].text+'</p>';
+  h+='<h3>Monthly outlook — '+new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'})+'</h3>';
+  h+='<p class="readout">Read from the balance of your traced lines, this month leans towards <b>'+mo.focus+'</b>. The traditional advice is to <b>'+mo.caution+'</b>. '
+    +'<b>'+mo.favour.charAt(0).toUpperCase()+mo.favour.slice(1)+'</b> are read as the more supportive part of the month, with <b>'+mo.day+'</b> as the helpful weekday and <b>'+mo.colour+'</b> as the colour to favour. '
+    +'<i>This is a palmistry-based interpretation for reflection, not a factual forecast.</i></p>';
+  h+='<h3>Traditional remedies</h3>';
+  Rd.remedies.forEach(r=>{ h+='<div class="remedy">'+r+'</div>'; });
+  h+='<div style="margin-top:14px"><button class="small ghost" onclick="window.JyotishBridge?JyotishBridge.printPage():window.print()">🖨 Print / Save PDF</button></div>';
+  el('palmOut').innerHTML=h;
+  if(window.collectPalmFindings){ collectPalmFindings(m,Rd); renderUpayTab();
+    toast(L('Reading ready — see the Upay tab for remedies','पठन तैयार — उपाय टैब में समाधान देखें')); }
+  el('palmOut').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+<script>
+/* ================= FACE TAB UI ================= */
+let faceStage=null, faceView='front';
+function renderFaceTab(){
+  let h='<div class="card"><h2>🙂 Face Reading — measure your features</h2>';
+  h+='<div class="help"><b>How this works:</b> upload a straight-on photo of your face in even light, then tap the 20 marked points. The app computes the <b>actual geometry</b> — face shape, thirds, eye spacing, nose and lip proportions, jaw and symmetry — and gives the traditional physiognomy reading for those proportions. Everything stays on your device.</div>';
+  h+='<div class="grid g3">'
+    +'<div><label>View</label><select id="faceView"><option value="front">Front face</option><option value="left">Left profile</option><option value="right">Right profile</option></select></div>'
+    +'<div><label>Face photo</label><input type="file" id="faceFile" accept="image/*"></div>'
+    +'<div style="display:flex;align-items:end"><button class="small ghost" style="width:100%" onclick="resetFace()">Clear points</button></div></div>';
+  h+='<p class="note">Front view gives the full reading. Profile views are for your own comparison — the geometry below is measured from the front view.</p>';
+  h+='<div id="faceStageBox" style="text-align:center;margin-top:14px"></div>';
+  h+='<div id="faceControls" style="display:none">';
+  h+='<h3>Mark the points</h3><p class="note" id="faceHint">Choose a point below, then tap it on the photo.</p>';
+  h+='<div class="grid g3" id="facePointBtns" style="margin-top:8px"></div>';
+  h+='<div class="steps" id="faceSteps" style="margin-top:10px"></div>';
+  h+='<div style="margin-top:14px"><button onclick="doFaceReading()">📜 Generate Reading</button></div></div>';
+  h+='<div id="faceOut"></div>';
+  h+='<div class="disclaim"><b>Please note:</b> face reading (samudrika shastra / physiognomy) is a traditional practice included here for cultural interest. The measurements are real; the interpretations are traditional and are not statements of fact about any person’s character, health or ability.</div></div>';
+  el('pane-face').innerHTML=h;
+  faceStage=makePointStage(el('faceStageBox'),updateFaceSteps);
+  el('faceFile').onchange=e=>{ if(e.target.files[0]){ faceStage.load(e.target.files[0]); el('faceControls').style.display='block'; } };
+  el('faceView').onchange=e=>faceView=e.target.value;
+  el('facePointBtns').innerHTML=FACE_POINTS.map(([k,n,d])=>
+    '<button class="small ghost" onclick="pickFacePoint(\''+k+'\')">'+n+'</button>').join('');
+  updateFaceSteps();
+}
+function pickFacePoint(k){
+  faceStage.current=k;
+  const P=FACE_POINTS.find(x=>x[0]===k);
+  el('faceHint').innerHTML='<b style="color:var(--gold2)">'+P[1]+':</b> '+P[2];
+}
+function updateFaceSteps(){
+  if(!el('faceSteps')) return;
+  const done=Object.keys(faceStage.points).length;
+  el('faceSteps').innerHTML='<span class="'+(done>=6?'done':'now')+'">'+done+' of 20 points marked</span>'
+    +'<span class="'+(done>=6?'done':'')+'">Minimum 6 for a basic reading</span>'
+    +'<span class="'+(done>=20?'done':'')+'">All 20 for the full reading</span>';
+}
+function resetFace(){ if(!faceStage) return; faceStage.points={}; faceStage.redraw(); updateFaceSteps(); el('faceOut').innerHTML=''; }
+function doFaceReading(){
+  const M=faceMetrics(faceStage.points);
+  if(!M){ toast('Please mark at least hairline, chin, both jaw and both cheekbone points'); return; }
+  const R=faceReading(M);
+  let h='<h3 style="margin-top:20px">Facial geometry — measured</h3>';
+  h+='<div style="overflow-x:auto"><table><tr><th>Feature</th><th>Measurement</th></tr>';
+  R.forEach(r=>{ h+='<tr><td>'+r.h+'</td><td>'+r.v+'</td></tr>'; });
+  h+='</table></div>';
+  h+='<h3>Traditional reading</h3>';
+  R.forEach(r=>{ if(r.t) h+='<p class="readout"><b>'+r.h+' —</b> '+r.t+'</p>'; });
+  // combined character summary
+  const bits=[];
+  if(M.shape) bits.push(M.shape.toLowerCase()+' face');
+  if(M.eyeGapRatio>1.15) bits.push('wide-set eyes'); else if(M.eyeGapRatio<0.85) bits.push('close-set eyes');
+  if(M.jawCheek>0.88) bits.push('a strong jaw');
+  if(M.lipH>0.075) bits.push('full lips');
+  h+='<h3>In summary</h3><p class="readout">The combination of '+(bits.join(', ')||'your marked proportions')
+    +' is traditionally read as '+(M.jawCheek>0.88?'a determined and dependable temperament':'a sensitive and adaptable temperament')
+    +(M.eyeGapRatio>1.15?', with a broad and tolerant outlook':(M.eyeGapRatio<0.85?', with sharp focus and attention to detail':''))
+    +'. Classical physiognomy would advise you to lean on '+(M.jawCheek>0.88?'your persistence':'your perceptiveness')
+    +' and to guard against '+(M.jawCheek>0.88?'stubbornness':'over-thinking')+'.</p>';
+  h+='<div style="margin-top:14px"><button class="small ghost" onclick="window.JyotishBridge?JyotishBridge.printPage():window.print()">🖨 Print / Save PDF</button></div>';
+  el('faceOut').innerHTML=h;
+  if(window.collectFaceFindings){ collectFaceFindings(M); renderUpayTab(); }
+  el('faceOut').scrollIntoView({behavior:'smooth',block:'start'});
+}
+/* ================= NUMEROLOGY TAB UI ================= */
+function renderNumTab(){
+  let h='<div class="card"><h2>🔢 Numerology Profile</h2>';
+  h+='<div class="grid g3">'
+    +'<div><label>Full Name (as commonly used)</label><input id="nName" placeholder="e.g. Sandeep Kumar"></div>'
+    +'<div><label>Date of Birth</label><input id="nDOB" type="date" value="1980-01-01"></div>'
+    +'<div><label>Gender (optional)</label><select id="nGender"><option value="">Not specified</option><option value="M">Male</option><option value="F">Female</option></select></div>'
+    +'<div><label>System</label><select id="nSys"><option value="pythagorean">Pythagorean (Western)</option><option value="chaldean">Chaldean (Vedic-linked)</option></select></div>'
+    +'<div><label>Mobile Number (optional)</label><input id="nMobile" placeholder="e.g. 9876543210"></div>'
+    +'<div><label>Business Name (optional)</label><input id="nBiz" placeholder="e.g. PCS Solutions"></div>'
+    +'<div><label>Company Incorporation Date (optional)</label><input id="nInc" type="date"></div>'
+    +'<div style="display:flex;align-items:end"><button style="width:100%" onclick="doNumerology()">✨ Calculate</button></div></div>';
+  h+='<div id="numOut"></div>';
+  h+='<div class="disclaim"><b>Please note:</b> numerology is a traditional system of number symbolism. The calculations here follow the classical Pythagorean and Chaldean methods faithfully, but the guidance is for reflection and cultural interest, not professional advice.</div></div>';
+  el('pane-num').innerHTML=h;
+}
+function numCard(label,val,extra){
+  const M=NUM_MEAN[val]||NUM_MEAN[reduceNum(val)]||{};
+  return '<div class="metric"><span>'+label+(extra?' <span class="note" style="display:inline">'+extra+'</span>':'')+'</span><b>'+val+(M.k?' — '+M.k:'')+'</b></div>';
+}
+function doNumerology(){
+  const name=el('nName').value.trim(), dob=el('nDOB').value, sys=el('nSys').value;
+  if(!name||!dob){ toast('Please enter name and date of birth'); return; }
+  const P=numerologyProfile(name,dob,sys);
+  const LP=NUM_MEAN[P.lifePath]||NUM_MEAN[reduceNum(P.lifePath)];
+  const DE=NUM_MEAN[P.destiny]||NUM_MEAN[reduceNum(P.destiny)];
+  const SO=NUM_MEAN[P.soul]||NUM_MEAN[reduceNum(P.soul)];
+  let h='<h3 style="margin-top:18px">Core numbers for '+name+'</h3>';
+  h+='<div class="grid g2"><div>';
+  h+=numCard('Life Path',P.lifePath,'(from date of birth)');
+  h+=numCard('Destiny / Expression',P.destiny,'(full name)');
+  h+=numCard('Soul Urge',P.soul,'(vowels)');
+  h+=numCard('Personality',P.personality,'(consonants)');
+  h+=numCard('Birthday',P.birthday);
+  h+=numCard('Maturity',P.maturity);
+  h+='</div><div>';
+  h+='<div class="metric"><span>Personal Year ('+new Date().getFullYear()+')</span><b>'+P.personalYear+'</b></div>';
+  h+='<div class="metric"><span>Personal Month</span><b>'+P.personalMonth+'</b></div>';
+  h+='<div class="metric"><span>Personal Day (today)</span><b>'+P.personalDay+'</b></div>';
+  h+='<div class="metric"><span>Lucky Numbers</span><b>'+(LP.luck||'')+'</b></div>';
+  h+='<div class="metric"><span>Lucky Colours</span><b>'+(LP.col||'')+'</b></div>';
+  h+='<div class="metric"><span>Favourable Day</span><b>'+(LP.day||'')+'</b></div>';
+  h+='</div></div>';
+  h+='<h3>What the core numbers say</h3>';
+  h+='<p class="readout"><b>Life Path '+P.lifePath+' — '+LP.k+':</b> '+LP.t+'</p>';
+  h+='<p class="readout"><b>Destiny '+P.destiny+' — '+DE.k+':</b> Your name directs you towards this expression. '+DE.t+'</p>';
+  h+='<p class="readout"><b>Soul Urge '+P.soul+':</b> Inwardly, what you most want is the quality of <b>'+SO.k.replace(/^The /,'')+'</b> — '+SO.t.charAt(0).toLowerCase()+SO.t.slice(1)+'</p>';
+  h+='<p class="readout"><b>Maturity '+P.maturity+':</b> From roughly age 35 onward, life increasingly asks you to express this number: '+(NUM_MEAN[P.maturity]||NUM_MEAN[reduceNum(P.maturity)]).t+'</p>';
+  h+='<h3>Career &amp; business</h3>';
+  h+='<p class="readout"><b>Career tendencies:</b> '+LP.career+'</p>';
+  h+='<p class="readout"><b>Business suitability:</b> '+([1,3,5,8,9,22].includes(P.lifePath)?'Your Life Path is well suited to independent enterprise — you have the initiative and drive to run your own venture.':'Your Life Path favours partnership, salaried responsibility or professional practice more than solo enterprise; if you do start a business, take a strong partner for the parts you dislike.')+'</p>';
+  h+='<p class="readout"><b>Relationship compatibility:</b> '+LP.rel+'</p>';
+  h+='<h3>Personal Year '+P.personalYear+' — '+new Date().getFullYear()+'</h3>';
+  h+='<p class="readout">'+YEAR_MEAN[P.personalYear]+'</p>';
+  h+='<p class="readout"><b>This month (Personal Month '+P.personalMonth+'):</b> '+YEAR_MEAN[P.personalMonth]+'</p>';
+  h+='<h3>Pinnacle cycles</h3><div style="overflow-x:auto"><table><tr><th>Cycle</th><th>Ages</th><th>Number</th><th>Theme</th></tr>';
+  P.pinnacles.forEach((pk,i)=>{
+    const a=P.pinnacleAges[i], M=NUM_MEAN[pk]||NUM_MEAN[reduceNum(pk)];
+    h+='<tr'+(i===P.currentPinnacle?' style="outline:2px solid var(--gold)"':'')+'><td>'+(i+1)+(i===P.currentPinnacle?' (current)':'')+'</td><td>'+a[0]+'–'+a[1]+'</td><td>'+pk+'</td><td>'+M.k+'</td></tr>'; });
+  h+='</table></div>';
+  h+='<h3>Challenge numbers</h3><div style="overflow-x:auto"><table><tr><th>Challenge</th><th>Number</th><th>Lesson</th></tr>';
+  ['First (early life)','Second (middle life)','Main (whole life)','Fourth (later life)'].forEach((n,i)=>{
+    h+='<tr><td>'+n+'</td><td>'+P.challenges[i]+'</td><td>'+CHALLENGE_MEAN[P.challenges[i]]+'</td></tr>'; });
+  h+='</table></div>';
+  h+='<h3>Lucky dates each month</h3><p class="readout">'+luckyDates(P.lifePath).join(', ')+' — these dates resonate with your Life Path number and are traditionally chosen for important beginnings.</p>';
+  h+='<h3>Favourable years ahead</h3>';
+  const yrs=[]; const nowY=new Date().getFullYear();
+  for(let i=0;i<9;i++){ const yy=nowY+i;
+    const [by,bm,bd]=dob.split('-').map(Number);
+    const py=reduceNum(reduceNum(bd)+reduceNum(bm)+reduceNum(String(yy).split('').reduce((a,c)=>a+ +c,0)));
+    if([1,3,5,6,8].includes(py)) yrs.push(yy+' (PY '+py+')'); }
+  h+='<p class="readout">'+(yrs.length?yrs.join(' · ')+' are traditionally your more supportive years for new undertakings.':'The coming years favour consolidation over new starts.')+'</p>';
+  // name spelling suggestions
+  const target=[1,3,5,6].includes(reduceNum(P.lifePath))?reduceNum(P.lifePath):(reduceNum(P.lifePath)===8?6:5);
+  const sug=nameSpellings(name,target,sys);
+  h+='<h3>Suggested name spellings</h3>';
+  h+='<p class="readout">In the '+(sys==='chaldean'?'Chaldean':'Pythagorean')+' system, a name totalling <b>'+target+'</b> would harmonise best with your Life Path '+P.lifePath+'. '
+    +(sug.length?'Spellings that reach that total: '+sug.map(s=>'<span class="pill"><b>'+s+'</b></span>').join(' ')
+      :'Your present spelling already sits well with your core numbers — no change is indicated.')+'</p>';
+  h+='<p class="note">Traditional practice treats a name change as a slow act — used consistently in signature and daily use for it to take effect. Legal name changes are a personal decision.</p>';
+  // optional extras
+  const mob=el('nMobile').value.trim();
+  if(mob){ const a=numberAnalysis(mob);
+    h+='<h3>Your mobile number</h3><p class="readout">Digits total <b>'+a.total+'</b>, reducing to <b>'+a.root+'</b>. '+MOBILE_MEAN[a.root]
+      +' '+(compatibility(a.root,P.lifePath).score>=70?'It harmonises well with your Life Path '+P.lifePath+'.':'It pulls in a different direction from your Life Path '+P.lifePath+'; a number reducing to '+reduceNum(P.lifePath)+' or '+reduceNum(P.lifePath+2)+' would suit you better.')+'</p>'; }
+  const biz=el('nBiz').value.trim();
+  if(biz){ const bn=nameNumber(biz,sys);
+    const c=compatibility(bn,P.lifePath);
+    h+='<h3>Business name: '+biz+'</h3><p class="readout">Name number <b>'+bn+' — '+(NUM_MEAN[bn]||NUM_MEAN[reduceNum(bn)]).k+'</b>. '
+      +(NUM_MEAN[bn]||NUM_MEAN[reduceNum(bn)]).t+' Compatibility with your Life Path: <b>'+c.score+'% — '+c.verdict+'</b>. '
+      +'Traditionally, business names reducing to 1, 3, 5, 6, 8 or 9 are favoured for trade; 6 and 9 for service, 8 for finance and industry, 5 for sales and trading.</p>'; }
+  const inc=el('nInc').value;
+  if(inc){ const [iy,im,id]=inc.split('-').map(Number);
+    const isum=reduceNum(reduceNum(id)+reduceNum(im)+reduceNum(String(iy).split('').reduce((a,c)=>a+ +c,0)));
+    h+='<h3>Company incorporation date</h3><p class="readout">The date '+new Date(inc).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})
+      +' carries the number <b>'+isum+' — '+(NUM_MEAN[isum]||NUM_MEAN[reduceNum(isum)]).k+'</b>. '+YEAR_MEAN[isum]+'</p>'; }
+  h+='<div style="margin-top:14px"><button class="small ghost" onclick="window.JyotishBridge?JyotishBridge.printPage():window.print()">🖨 Print / Save PDF</button></div>';
+  el('numOut').innerHTML=h;
+  if(window.collectNumFindings){ collectNumFindings(P,name); renderUpayTab(); }
+  el('numOut').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+<script>
+/* ================= TOOLS TAB ================= */
+function renderToolsTab(){
+  let h='<div class="card"><h2>🧮 Number Tools</h2>';
+  h+='<div class="tabs" id="toolTabs">'
+    +'<button data-tool="compat" class="active">Name compatibility</button>'
+    +'<button data-tool="baby">Baby names</button>'
+    +'<button data-tool="vehicle">Vehicle number</button>'
+    +'<button data-tool="house">House number</button>'
+    +'<button data-tool="launch">Launch dates</button></div>';
+  h+='<div id="toolBody"></div></div>';
+  el('pane-tools').innerHTML=h;
+  document.querySelectorAll('#toolTabs button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#toolTabs button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); showTool(b.dataset.tool); });
+  showTool('compat');
+}
+function showTool(t){
+  const S='<div><label>System</label><select id="tSys"><option value="pythagorean">Pythagorean</option><option value="chaldean">Chaldean</option></select></div>';
+  let h='';
+  if(t==='compat'){
+    h='<h3>Name compatibility between two people</h3><div class="grid g3">'
+      +'<div><label>Person 1 name</label><input id="c1n"></div>'
+      +'<div><label>Person 1 date of birth</label><input id="c1d" type="date"></div>'
+      +'<div><label>Person 2 name</label><input id="c2n"></div>'
+      +'<div><label>Person 2 date of birth</label><input id="c2d" type="date"></div>'
+      +S+'<div style="display:flex;align-items:end"><button style="width:100%" onclick="runCompat()">Check</button></div></div><div id="toolOut"></div>';
+  } else if(t==='baby'){
+    h='<h3>Baby name suggestions</h3><div class="grid g3">'
+      +'<div><label>Baby’s date of birth</label><input id="bDOB" type="date"></div>'
+      +'<div><label>For</label><select id="bSex"><option value="M">Boy</option><option value="F">Girl</option></select></div>'
+      +S+'<div style="display:flex;align-items:end"><button style="width:100%" onclick="runBaby()">Suggest names</button></div></div><div id="toolOut"></div>';
+  } else if(t==='vehicle'){
+    h='<h3>Vehicle number analysis</h3><div class="grid g3">'
+      +'<div><label>Vehicle number</label><input id="vNum" placeholder="e.g. DL 3C AB 1234"></div>'
+      +'<div><label>Owner’s date of birth (optional)</label><input id="vDOB" type="date"></div>'
+      +'<div style="display:flex;align-items:end"><button style="width:100%" onclick="runVehicle()">Analyse</button></div></div><div id="toolOut"></div>';
+  } else if(t==='house'){
+    h='<h3>House / flat number analysis</h3><div class="grid g3">'
+      +'<div><label>House or flat number</label><input id="hNum" placeholder="e.g. B-402"></div>'
+      +'<div><label>Occupant’s date of birth (optional)</label><input id="hDOB" type="date"></div>'
+      +'<div style="display:flex;align-items:end"><button style="width:100%" onclick="runHouse()">Analyse</button></div></div><div id="toolOut"></div>';
+  } else {
+    h='<h3>Company launch / muhurat dates</h3><div class="grid g3">'
+      +'<div><label>Business or personal name</label><input id="lName" placeholder="e.g. PCS Solutions"></div>'
+      +'<div><label>Owner’s date of birth</label><input id="lDOB" type="date"></div>'
+      +S+'<div style="display:flex;align-items:end"><button style="width:100%" onclick="runLaunch()">Suggest dates</button></div></div><div id="toolOut"></div>';
+  }
+  el('toolBody').innerHTML=h;
+}
+function runCompat(){
+  const n1=el('c1n').value.trim(), n2=el('c2n').value.trim(), d1=el('c1d').value, d2=el('c2d').value;
+  const sys=el('tSys').value;
+  if(!n1||!n2){ toast('Enter both names'); return; }
+  const nn1=nameNumber(n1,sys), nn2=nameNumber(n2,sys);
+  const nameC=compatibility(nn1,nn2);
+  let h='<h3 style="margin-top:16px">Result</h3>';
+  h+='<div class="metric"><span>'+n1+' — name number</span><b>'+nn1+' ('+(NUM_MEAN[nn1]||NUM_MEAN[reduceNum(nn1)]).k+')</b></div>';
+  h+='<div class="metric"><span>'+n2+' — name number</span><b>'+nn2+' ('+(NUM_MEAN[nn2]||NUM_MEAN[reduceNum(nn2)]).k+')</b></div>';
+  h+='<div class="metric"><span>Name compatibility</span><b>'+nameC.score+'% — '+nameC.verdict+'</b></div>';
+  if(d1&&d2){
+    const p1=numerologyProfile(n1,d1,sys), p2=numerologyProfile(n2,d2,sys);
+    const lpC=compatibility(p1.lifePath,p2.lifePath);
+    h+='<div class="metric"><span>Life Path numbers</span><b>'+p1.lifePath+' &amp; '+p2.lifePath+'</b></div>';
+    h+='<div class="metric"><span>Life Path compatibility</span><b>'+lpC.score+'% — '+lpC.verdict+'</b></div>';
+    const overall=Math.round((nameC.score+lpC.score*1.5)/2.5);
+    h+='<div class="metric"><span>Overall</span><b>'+overall+'%</b></div>';
+    h+='<p class="readout">'+(overall>=80?'A strongly harmonious pairing. Your natural rhythms support each other, and differences tend to be complementary rather than divisive.':
+      overall>=65?'A workable and generally happy pairing. Where you differ, conscious communication settles matters quickly.':
+      'A pairing that asks for effort. The numbers pull in different directions, so give each other room for your different paces — many long marriages sit here.')+'</p>';
+    h+='<p class="readout"><b>'+n1+'</b> is a '+(NUM_MEAN[p1.lifePath]||NUM_MEAN[reduceNum(p1.lifePath)]).k+' — '+(NUM_MEAN[p1.lifePath]||NUM_MEAN[reduceNum(p1.lifePath)]).rel+'</p>';
+    h+='<p class="readout"><b>'+n2+'</b> is a '+(NUM_MEAN[p2.lifePath]||NUM_MEAN[reduceNum(p2.lifePath)]).k+' — '+(NUM_MEAN[p2.lifePath]||NUM_MEAN[reduceNum(p2.lifePath)]).rel+'</p>';
+  }
+  el('toolOut').innerHTML=h;
+}
+function runBaby(){
+  const dob=el('bDOB').value, sex=el('bSex').value, sys=el('tSys').value;
+  if(!dob){ toast('Enter the date of birth'); return; }
+  const [y,m,d]=dob.split('-').map(Number);
+  const lp=reduceNum(reduceNum(d)+reduceNum(m)+reduceNum(String(y).split('').reduce((a,c)=>a+ +c,0)));
+  const good=[lp,reduceNum(lp+2),reduceNum(lp+4)].filter((v,i,a)=>a.indexOf(v)===i&&v>0);
+  let h='<h3 style="margin-top:16px">For a child born '+new Date(dob).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})+'</h3>';
+  h+='<p class="readout">Life Path number <b>'+lp+' — '+(NUM_MEAN[lp]||NUM_MEAN[reduceNum(lp)]).k+'</b>. '+(NUM_MEAN[lp]||NUM_MEAN[reduceNum(lp)]).t+'</p>';
+  h+='<p class="readout">Traditionally, a name whose number totals <b>'+good.join(', ')+'</b> harmonises with this Life Path.</p>';
+  h+='<div style="overflow-x:auto"><table><tr><th>Name</th><th>Name number</th><th>Quality</th></tr>';
+  const seen=new Set();
+  good.forEach(g=>{ (BABY_NAMES[reduceNum(g)]||{})[sex==='M'?'M':'F']?.forEach(n=>{
+    if(seen.has(n)) return; seen.add(n);
+    const nn=nameNumber(n,sys);
+    h+='<tr><td><b style="color:var(--gold2)">'+n+'</b></td><td>'+nn+'</td><td>'+(NUM_MEAN[nn]||NUM_MEAN[reduceNum(nn)]).k+'</td></tr>'; }); });
+  h+='</table></div>';
+  h+='<p class="note">These are traditional Indian names grouped by their planetary/number association. Family custom, the birth nakshatra syllable, and the parents’ preference all matter alongside the number.</p>';
+  el('toolOut').innerHTML=h;
+}
+function runVehicle(){
+  const v=el('vNum').value.trim(), dob=el('vDOB').value;
+  const a=numberAnalysis(v);
+  if(!a){ toast('Enter a vehicle number with digits'); return; }
+  let h='<h3 style="margin-top:16px">'+v.toUpperCase()+'</h3>';
+  h+='<div class="metric"><span>Digit total</span><b>'+a.total+'</b></div>';
+  h+='<div class="metric"><span>Root number</span><b>'+a.root+' — '+(NUM_MEAN[a.root]||{}).k+'</b></div>';
+  h+='<p class="readout">'+VEHICLE_MEAN[a.root]+'</p>';
+  if(dob){ const [y,m,d]=dob.split('-').map(Number);
+    const lp=reduceNum(reduceNum(d)+reduceNum(m)+reduceNum(String(y).split('').reduce((a2,c)=>a2+ +c,0)));
+    const c=compatibility(a.root,lp);
+    h+='<div class="metric"><span>Owner Life Path</span><b>'+lp+'</b></div>';
+    h+='<div class="metric"><span>Compatibility</span><b>'+c.score+'% — '+c.verdict+'</b></div>';
+    h+='<p class="readout">'+(c.score>=70?'This number sits well with the owner — a fortunate choice.':'A number reducing to '+reduceNum(lp)+', '+reduceNum(lp+2)+' or 6 would suit the owner better. If the vehicle is already registered, the traditional remedy is to keep it well maintained and offer a coconut at the first journey of each year.')+'</p>'; }
+  el('toolOut').innerHTML=h;
+}
+function runHouse(){
+  const v=el('hNum').value.trim(), dob=el('hDOB').value;
+  const a=numberAnalysis(v);
+  if(!a){ toast('Enter a house number with digits'); return; }
+  let h='<h3 style="margin-top:16px">House '+v.toUpperCase()+'</h3>';
+  h+='<div class="metric"><span>Digit total</span><b>'+a.total+'</b></div>';
+  h+='<div class="metric"><span>Root number</span><b>'+a.root+' — '+(NUM_MEAN[a.root]||{}).k+'</b></div>';
+  h+='<p class="readout">'+HOUSE_MEAN[a.root]+'</p>';
+  if(dob){ const [y,m,d]=dob.split('-').map(Number);
+    const lp=reduceNum(reduceNum(d)+reduceNum(m)+reduceNum(String(y).split('').reduce((a2,c)=>a2+ +c,0)));
+    const c=compatibility(a.root,lp);
+    h+='<div class="metric"><span>Occupant Life Path</span><b>'+lp+'</b></div>';
+    h+='<div class="metric"><span>Compatibility</span><b>'+c.score+'% — '+c.verdict+'</b></div>';
+    h+='<p class="readout">'+(c.score>=70?'A harmonious home for this occupant.':'The house number and the occupant pull differently. Traditional remedies: add the occupant’s favourable number to the nameplate (e.g. "B-402A"), or place a symbol of the harmonising number at the entrance.')+'</p>'; }
+  el('toolOut').innerHTML=h;
+}
+function runLaunch(){
+  const name=el('lName').value.trim(), dob=el('lDOB').value, sys=el('tSys').value;
+  if(!dob){ toast('Enter the owner’s date of birth'); return; }
+  const [y,m,d]=dob.split('-').map(Number);
+  const lp=reduceNum(reduceNum(d)+reduceNum(m)+reduceNum(String(y).split('').reduce((a,c)=>a+ +c,0)));
+  const bn=name?nameNumber(name,sys):lp;
+  const target=[1,3,5,6,8,9].includes(reduceNum(bn))?reduceNum(bn):reduceNum(lp);
+  const dates=goodLaunchDates(target,new Date(),10);
+  let h='<h3 style="margin-top:16px">Favourable launch dates</h3>';
+  if(name) h+='<div class="metric"><span>'+name+' — name number</span><b>'+bn+'</b></div>';
+  h+='<div class="metric"><span>Owner Life Path</span><b>'+lp+'</b></div>';
+  h+='<div class="metric"><span>Target day number</span><b>'+target+'</b></div>';
+  h+='<div style="overflow-x:auto;margin-top:10px"><table><tr><th>Date</th><th>Day</th><th>Full date number</th><th>Date-of-month number</th></tr>';
+  dates.forEach(x=>{ h+='<tr><td><b style="color:var(--gold2)">'+x.date.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+'</b></td><td>'+x.date.toLocaleDateString('en-IN',{weekday:'long'})+'</td><td>'+x.day+'</td><td>'+x.dateNum+'</td></tr>'; });
+  h+='</table></div>';
+  h+='<p class="note">These dates carry a number in harmony with the business name and owner. For a full muhurat, also check the panchang (tithi, nakshatra) for the chosen day.</p>';
+  el('toolOut').innerHTML=h;
+}
+/* ================= ABOUT TAB ================= */
+function renderAboutTab(){
+  el('pane-about').innerHTML='<div class="card"><h2>📖 How this app works</h2>'
+   +'<h3>Palmistry</h3><p class="readout">This app does not guess at your palm from a photo. Instead you <b>trace</b> each line yourself on your own picture, and the app measures what you traced: the true length of each line relative to your palm, how much it curves away from a straight chord, and how strongly it stands out from the surrounding skin (measured as pixel contrast along the path). Hand shape is computed from your marked wrist, finger-base and finger-tip points, and the thumb angle from the thumb points. Those measurements are then matched to the classical palmistry meanings.</p>'
+   +'<h3>Face reading</h3><p class="readout">You mark twenty landmark points on your photograph. From those the app computes real geometry — face height to width, the three facial zones, eye spacing as a multiple of eye width, nose length and width ratios, lip height, mouth width, jaw-to-cheekbone ratio and left-right symmetry. The numbers shown are genuine measurements of your marking; the accompanying text is the traditional physiognomy interpretation of those proportions.</p>'
+   +'<h3>Numerology</h3><p class="readout">All numbers follow the classical methods. You can choose the <b>Pythagorean</b> table (A=1…Z=8, the common Western system) or the <b>Chaldean</b> table (which omits 9 and is closer to the older Indian usage). Master numbers 11, 22 and 33 are preserved rather than reduced. Life Path comes from the birth date, Destiny from the whole name, Soul Urge from the vowels, Personality from the consonants, and the pinnacles and challenges from the classical formulas.</p>'
+   +'<h3>Your privacy</h3><p class="readout">Every photo and every calculation stays on your device. This app has no internet permission at all — nothing is uploaded, stored on a server, or shared with anyone.</p>'
+   +'<div class="disclaim"><b>Important:</b> palmistry, face reading and numerology are traditional cultural practices. This app is offered for interest, entertainment and self-reflection. It does not provide medical, psychological, legal or financial advice, and its readings should not be used to make decisions about health, money, employment or relationships. For those matters, please consult a qualified professional.</div></div>';
+}
+/* ================= LANGUAGE ================= */
+let LANG='en';
+const L=(en,hi)=>LANG==='hi'?hi:en;
+const UI={
+ title:['Hasta Darpan','हस्त दर्पण'],
+ tag:['Palmistry · Face Reading · Numerology — measured on your device, read in the traditional way',
+      'हस्तरेखा · चेहरा पठन · अंकशास्त्र — आपके फ़ोन पर मापा गया, पारंपरिक विधि से पढ़ा गया'],
+ back:['Back','वापस'],
+ tabs:{palm:['🖐 Palmistry','🖐 हस्तरेखा'],face:['🙂 Face Reading','🙂 चेहरा पठन'],
+   num:['🔢 Numerology','🔢 अंकशास्त्र'],upay:['🪔 Upay','🪔 उपाय'],
+   tools:['🧮 Number Tools','🧮 अंक साधन'],about:['📖 How it works','📖 कैसे काम करता है']},
+ upayTitle:['🪔 Your Personal Upay — corrections for what was measured',
+            '🪔 आपके व्यक्तिगत उपाय — जो मापा गया उसका समाधान'],
+ upayIntro:['Generate a palm reading, face reading or numerology profile first. Every weak point found is listed here with its traditional correction — including a practical step you can actually take.',
+            'पहले हस्तरेखा, चेहरा पठन या अंकशास्त्र निकालें। मिली प्रत्येक कमज़ोरी यहाँ उसके पारंपरिक उपाय के साथ दी जाएगी — साथ में एक व्यावहारिक कदम भी जो आप वास्तव में कर सकें।'],
+ nothing:['Nothing generated yet. Open the Palmistry, Face Reading or Numerology tab, complete a reading, then return here.',
+          'अभी कुछ नहीं बना है। हस्तरेखा, चेहरा पठन या अंकशास्त्र टैब खोलें, पठन पूरा करें, फिर यहाँ लौटें।'],
+ noProblem:['No significant weakness was found in what you generated. The general practices below keep it that way.',
+            'आपके पठन में कोई बड़ी कमज़ोरी नहीं मिली। नीचे दिए सामान्य उपाय इसे बनाए रखेंगे।'],
+ mantra:['Mantra','मंत्र'],daan:['Daan (charity)','दान'],act:['Practical step','व्यावहारिक कदम'],
+ gem:['Gemstone / Rudraksha','रत्न / रुद्राक्ष'],
+ severity:{high:['Needs attention','ध्यान देने योग्य'],med:['Moderate','मध्यम'],low:['Mild','हल्का']},
+ general:['General strengthening (for everyone)','सामान्य उपाय (सभी के लिए)'],
+ print:['🖨 Print / Save PDF','🖨 प्रिंट / PDF सेव करें']};
+/* ================= UPAY ENGINE ================= */
+const NUM_PLANET={1:'Sun',2:'Moon',3:'Jupiter',4:'Rahu',5:'Mercury',6:'Venus',7:'Ketu',8:'Saturn',9:'Mars'};
+const PLANET_UPAY={
+ Sun:{m:['"Om Hraam Hreem Hraum Sah Suryaya Namah" 108 times at sunrise.','"ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः" सूर्योदय पर 108 बार।'],
+  d:['Wheat, jaggery or copper on Sunday.','रविवार को गेहूँ, गुड़ या तांबा दान करें।'],
+  g:['Ruby in copper/gold, ring finger, Sunday.','माणिक तांबे/सोने में, अनामिका, रविवार।'],
+  a:['Offer water to the rising Sun; respect your father; rise early; drop arrogance.','उगते सूर्य को जल दें; पिता का सम्मान करें; जल्दी उठें; अहंकार छोड़ें।']},
+ Moon:{m:['"Om Shraam Shreem Shraum Sah Chandraya Namah" 108 times on Monday.','"ॐ श्रां श्रीं श्रौं सः चन्द्राय नमः" सोमवार को 108 बार।'],
+  d:['Rice, milk, curd or silver on Monday.','सोमवार को चावल, दूध, दही या चांदी दान करें।'],
+  g:['Pearl in silver, little finger, Monday.','मोती चांदी में, कनिष्ठा, सोमवार।'],
+  a:['Serve your mother; keep fixed sleep hours; drink enough water; do not brood alone.','माता की सेवा करें; नींद का समय नियत रखें; पर्याप्त जल पिएं; अकेले चिंता न करें।']},
+ Mars:{m:['Hanuman Chalisa daily, or "Om Kraam Kreem Kraum Sah Bhaumaya Namah" 108 times.','प्रतिदिन हनुमान चालीसा, या "ॐ क्रां क्रीं क्रौं सः भौमाय नमः" 108 बार।'],
+  d:['Masoor dal, red cloth or jaggery on Tuesday.','मंगलवार को मसूर दाल, लाल वस्त्र या गुड़ दान करें।'],
+  g:['Red Coral in copper/gold, ring finger, Tuesday — under guidance.','मूंगा तांबे/सोने में, अनामिका, मंगलवार — सलाह लेकर।'],
+  a:['Control anger — the strongest Mars remedy. Avoid rash driving and risky ventures; donate blood if healthy.','क्रोध पर नियंत्रण — मंगल का सबसे प्रबल उपाय। तेज़ वाहन और जोखिम भरे काम टालें; स्वस्थ हों तो रक्तदान करें।']},
+ Mercury:{m:['"Om Braam Breem Braum Sah Budhaya Namah" 108 times on Wednesday.','"ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः" बुधवार को 108 बार।'],
+  d:['Green moong dal or green fodder to cows on Wednesday.','बुधवार को हरी मूंग दाल या गाय को हरा चारा दान करें।'],
+  g:['Emerald in gold, little finger, Wednesday.','पन्ना सोने में, कनिष्ठा, बुधवार।'],
+  a:['Never cheat in speech, accounts or trade. Keep your word; read or write daily; respect sisters and daughters.','वाणी, हिसाब या व्यापार में छल न करें। वचन निभाएं; प्रतिदिन पढ़ें-लिखें; बहन-बेटी का सम्मान करें।']},
+ Jupiter:{m:['"Om Graam Greem Graum Sah Gurave Namah" 108 times on Thursday.','"ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः" गुरुवार को 108 बार।'],
+  d:['Chana dal, turmeric, yellow sweets or books on Thursday.','गुरुवार को चने की दाल, हल्दी, पीली मिठाई या पुस्तकें दान करें।'],
+  g:['Yellow Sapphire in gold, index finger, Thursday.','पुखराज सोने में, तर्जनी, गुरुवार।'],
+  a:['Respect teachers and elders; guide others freely; avoid greed and over-eating; keep a Thursday fast.','गुरुजनों और बड़ों का सम्मान करें; दूसरों का निःस्वार्थ मार्गदर्शन करें; लोभ और अति भोजन से बचें; गुरुवार व्रत रखें।']},
+ Venus:{m:['"Om Draam Dreem Draum Sah Shukraya Namah" 108 times on Friday.','"ॐ द्रां द्रीं द्रौं सः शुक्राय नमः" शुक्रवार को 108 बार।'],
+  d:['White sweets, curd, rice or ghee on Friday.','शुक्रवार को सफेद मिठाई, दही, चावल या घी दान करें।'],
+  g:['Diamond or White Sapphire in silver, middle finger, Friday.','हीरा या सफेद पुखराज चांदी में, मध्यमा, शुक्रवार।'],
+  a:['Respect your partner and all women; keep conduct clean; avoid intoxicants; keep your home beautiful and tidy.','जीवनसाथी और सभी स्त्रियों का सम्मान करें; आचरण शुद्ध रखें; नशे से बचें; घर सुंदर और स्वच्छ रखें।']},
+ Saturn:{m:['Shani Chalisa or Hanuman Chalisa on Saturday; "Om Sham Shanicharaya Namah" 108 times.','शनिवार को शनि चालीसा या हनुमान चालीसा; "ॐ शं शनैश्चराय नमः" 108 बार।'],
+  d:['Black sesame, mustard oil, iron or a blanket on Saturday.','शनिवार को काले तिल, सरसों तेल, लोहा या कंबल दान करें।'],
+  g:['Iron ring or Rudraksha is the safe choice; Blue Sapphire only after trial and expert advice.','लोहे की अंगूठी या रुद्राक्ष सुरक्षित विकल्प; नीलम केवल परीक्षण और विशेषज्ञ सलाह के बाद।'],
+  a:['Serve labourers, the old and the poor; never delay anyone\'s wages; be punctual; light a lamp under a peepal tree on Saturday.','मज़दूरों, वृद्धों और गरीबों की सेवा करें; किसी की मज़दूरी में देर न करें; समय के पाबंद रहें; शनिवार को पीपल के नीचे दीपक जलाएं।']},
+ Rahu:{m:['"Om Bhraam Bhreem Bhraum Sah Rahave Namah" 108 times on Saturday.','"ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः" शनिवार को 108 बार।'],
+  d:['Coconut in running water; mustard oil; blankets to the poor.','बहते जल में नारियल; सरसों तेल; गरीबों को कंबल दान करें।'],
+  g:['Hessonite (Gomed) in silver — only with expert advice.','गोमेद चांदी में — केवल विशेषज्ञ सलाह से।'],
+  a:['Avoid shortcuts, gambling and anything dishonest; stay away from intoxicants; keep documents and taxes clean.','शॉर्टकट, जुआ और बेईमानी से बचें; नशे से दूर रहें; कागज़ात और कर ईमानदारी से रखें।']},
+ Ketu:{m:['"Om Sraam Sreem Sraum Sah Ketave Namah" 108 times on Thursday.','"ॐ स्रां स्रीं स्रौं सः केतवे नमः" गुरुवार को 108 बार।'],
+  d:['Grey blanket, sesame, or food to stray dogs.','भूरा कंबल, तिल, या आवारा कुत्तों को भोजन दान करें।'],
+  g:['Cat\'s Eye in silver, or Rudraksha — with expert advice.','लहसुनिया चांदी में, या रुद्राक्ष — विशेषज्ञ सलाह से।'],
+  a:['Feed stray dogs; meditate daily; do not abandon family duty in the name of spirituality.','आवारा कुत्तों को खिलाएं; प्रतिदिन ध्यान करें; अध्यात्म के नाम पर पारिवारिक कर्तव्य न छोड़ें।']}};
+function planetFix(p){
+  const u=PLANET_UPAY[p]; if(!u) return [];
+  return [['🕉',[UI.mantra[0]+': '+u.m[0],UI.mantra[1]+': '+u.m[1]]],
+          ['🎁',[UI.daan[0]+': '+u.d[0],UI.daan[1]+': '+u.d[1]]],
+          ['💎',[UI.gem[0]+': '+u.g[0],UI.gem[1]+': '+u.g[1]]],
+          ['✅',[UI.act[0]+': '+u.a[0],UI.act[1]+': '+u.a[1]]]];
+}
+const GENERAL_UPAY=[
+ ['🌅',['Offer water to the rising Sun daily.','प्रतिदिन उगते सूर्य को जल अर्पित करें।']],
+ ['🙏',['Touch the feet of your parents and elders each morning.','प्रतिदिन प्रातः माता-पिता और बड़ों के चरण स्पर्श करें।']],
+ ['🕉',['Recite the Gayatri Mantra 11 or 108 times daily.','प्रतिदिन गायत्री मंत्र 11 या 108 बार जपें।']],
+ ['🐄',['Feed a cow, a dog and the birds regularly.','नियमित रूप से गाय, कुत्ते और पक्षियों को भोजन दें।']],
+ ['🤝',['Speak truth and keep every promise — conduct is the root of all remedies.','सत्य बोलें और हर वचन निभाएं — आचरण ही सभी उपायों की जड़ है।']]];
+window.UPAY_FINDINGS=[];   // filled by palm/face/numerology readings
+function addFinding(f){ // {key,title:[en,hi],sev,why:[en,hi],fix:[...]}
+  window.UPAY_FINDINGS=window.UPAY_FINDINGS.filter(x=>x.key!==f.key);
+  window.UPAY_FINDINGS.push(f);
+}
+function renderUpayTab(){
+  const list=window.UPAY_FINDINGS||[];
+  let h='<div class="card"><h2>'+L(UI.upayTitle[0],UI.upayTitle[1])+'</h2>';
+  h+='<p class="note">'+L(UI.upayIntro[0],UI.upayIntro[1])+'</p>';
+  if(!list.length) h+='<p class="readout" style="margin-top:12px">'+L(UI.nothing[0],UI.nothing[1])+'</p>';
+  list.forEach(item=>{
+    h+='<div class="remedy-card"><h4>⚠️ '+L(item.title[0],item.title[1])
+      +'<span class="sev '+item.sev+'">'+L(UI.severity[item.sev][0],UI.severity[item.sev][1])+'</span></h4>';
+    h+='<div class="why">'+L(item.why[0],item.why[1])+'</div>';
+    item.fix.forEach(f=>{ h+='<div class="upay-row"><span class="ic">'+f[0]+'</span><span class="tx">'+L(f[1][0],f[1][1])+'</span></div>'; });
+    h+='</div>';
+  });
+  h+='<h3>'+L(UI.general[0],UI.general[1])+'</h3><div class="remedy-card">';
+  GENERAL_UPAY.forEach(g=>{ h+='<div class="upay-row"><span class="ic">'+g[0]+'</span><span class="tx">'+L(g[1][0],g[1][1])+'</span></div>'; });
+  h+='</div>';
+  h+='<p class="note">'+L('These are traditional practices offered for faith and self-discipline, not professional advice. For medical, legal or financial problems please consult a qualified professional.',
+    'ये पारंपरिक उपाय श्रद्धा और आत्म-अनुशासन हेतु हैं, पेशेवर सलाह नहीं। चिकित्सा, कानूनी या आर्थिक समस्या के लिए योग्य विशेषज्ञ से परामर्श लें।')+'</p>';
+  h+='<div style="margin-top:12px"><button class="small ghost" onclick="window.JyotishBridge?JyotishBridge.printPage():window.print()">'+L(UI.print[0],UI.print[1])+'</button></div></div>';
+  el('pane-upay').innerHTML=h;
+}
+/* ---- collectors ---- */
+function collectPalmFindings(m,Rd){
+  if(m.lifeClarity<10) addFinding({key:'life',sev:'med',
+    title:['Life line reads faint — vitality needs support','जीवन रेखा हल्की — जीवन-शक्ति को सहयोग चाहिए'],
+    why:['The line you traced stands out only weakly from the surrounding skin, which classical palmistry links with sensitivity to strain and a need for regular rest.',
+         'आपने जो रेखा खींची वह आसपास की त्वचा से हल्की उभरती है, जिसे हस्तरेखा शास्त्र थकान के प्रति संवेदनशीलता और नियमित विश्राम की आवश्यकता से जोड़ता है।'],
+    fix:[['💤',['Fix your sleep and meal times before anything else — this alone changes the line\'s reading over years.','सबसे पहले नींद और भोजन का समय नियत करें — वर्षों में यही रेखा का पठन बदल देता है।']],
+         ['🫒',['Weekly oil massage (abhyanga) of the hands and body with warm sesame oil.','सप्ताह में एक बार गुनगुने तिल के तेल से हाथों और शरीर की मालिश (अभ्यंग)।']]].concat(planetFix('Sun'))});
+  if(m.hasFate===false) addFinding({key:'fate',sev:'low',
+    title:['No fate line traced — self-made path','भाग्य रेखा नहीं — स्वयं बनाया मार्ग'],
+    why:['A missing fate line is very common and is not a negative sign: it indicates a life directed by your own choices rather than an obvious given track.',
+         'भाग्य रेखा का न होना बहुत सामान्य है और अशुभ नहीं: यह दर्शाता है कि जीवन किसी बनी-बनाई राह से नहीं, आपके अपने निर्णयों से चलता है।'],
+    fix:[['🎯',['Write down a single clear goal for the year and review it monthly — a self-made path needs a written direction.','वर्ष का एक स्पष्ट लक्ष्य लिखें और मासिक समीक्षा करें — स्वयं बनाए मार्ग को लिखित दिशा चाहिए।']]].concat(planetFix('Saturn'))});
+  if(m.headSlope>25) addFinding({key:'head',sev:'low',
+    title:['Strongly sloping head line — imagination needs grounding','अत्यधिक झुकी मस्तिष्क रेखा — कल्पना को स्थिरता चाहिए'],
+    why:['A steeply sloping head line marks a richly imaginative mind. Its classical caution is day-dreaming and difficulty finishing what is started.',
+         'तेज़ी से झुकी मस्तिष्क रेखा अत्यंत कल्पनाशील मन दर्शाती है। इसकी शास्त्रीय चेतावनी है — दिवास्वप्न और शुरू किया काम पूरा न कर पाना।'],
+    fix:[['📋',['Finish one task fully before starting the next; keep a written to-do list.','अगला काम शुरू करने से पहले एक काम पूरा करें; लिखित सूची रखें।']]].concat(planetFix('Mercury'))});
+  if(Rd&&Rd.areas) for(const a in Rd.areas){ if(Rd.areas[a].score<=2){
+    const p={Career:'Saturn',Relationships:'Venus',Health:'Sun',Personality:'Jupiter'}[a]||'Jupiter';
+    addFinding({key:'area'+a,sev:'med',
+      title:[a+' shows as the weaker area in your palm',(a==='Career'?'करियर':a==='Relationships'?'रिश्ते':a==='Health'?'स्वास्थ्य':'व्यक्तित्व')+' आपकी हथेली में कमज़ोर क्षेत्र'],
+      why:['The lines governing this area measured weaker than the others. The remedies below strengthen its ruling planet.',
+           'इस क्षेत्र की रेखाएं अन्य से कमज़ोर मापी गईं। नीचे दिए उपाय इसके स्वामी ग्रह को बल देते हैं।'],
+      fix:planetFix(p)}); } }
+}
+function collectFaceFindings(M){
+  if(M.symmetry!=null&&M.symmetry<88) addFinding({key:'sym',sev:'low',
+    title:['Facial symmetry measured below 88%','चेहरे की समरूपता 88% से कम'],
+    why:['Every real face is asymmetric, and a low value here often just means the photo was slightly turned. Traditionally, a settled mind is said to settle the face.',
+         'हर वास्तविक चेहरा असमान होता है, और कम मान का अर्थ प्रायः यह है कि फोटो थोड़ी तिरछी थी। परंपरा कहती है कि शांत मन चेहरे को संतुलित करता है।'],
+    fix:[['🧘',['Ten minutes of steady breathing (pranayama) daily; retake the photo straight-on for a truer measure.','प्रतिदिन दस मिनट स्थिर प्राणायाम; सही माप के लिए सीधी फोटो दोबारा लें।']]].concat(planetFix('Moon'))});
+  if(M.jawCheek!=null&&M.jawCheek<0.75) addFinding({key:'jaw',sev:'low',
+    title:['Fine jawline — willpower needs strengthening','पतली जबड़ा रेखा — इच्छाशक्ति को बल चाहिए'],
+    why:['A narrow jaw relative to the cheekbones is read in physiognomy as sensitivity and diplomacy rather than confrontation — excellent for harmony, but it can mean giving in too easily.',
+         'गालों की तुलना में पतला जबड़ा सामुद्रिक शास्त्र में संवेदनशीलता और कूटनीति दर्शाता है — सामंजस्य के लिए उत्तम, पर कभी-कभी बहुत जल्दी झुक जाना भी।'],
+    fix:[['💪',['Practise saying a clear "no" once a week without explaining yourself.','सप्ताह में एक बार बिना सफाई दिए स्पष्ट "ना" कहने का अभ्यास करें।']]].concat(planetFix('Mars'))});
+}
+function collectNumFindings(P,name){
+  const ch=P.challenges;
+  const main=ch[2];
+  if(main>0) addFinding({key:'challenge',sev:'med',
+    title:['Main life challenge number '+main,'मुख्य जीवन चुनौती अंक '+main],
+    why:[(CHALLENGE_MEAN[main]||''),'यह अंक जीवनभर सीखने योग्य पाठ दर्शाता है: '+(CHALLENGE_MEAN[main]||'')],
+    fix:planetFix(NUM_PLANET[main]||'Saturn')});
+  if([4,7,8].includes(reduceNum(P.lifePath))) addFinding({key:'lp',sev:'low',
+    title:['Life Path '+P.lifePath+' — a demanding number','जीवन पथ '+P.lifePath+' — परिश्रम मांगने वाला अंक'],
+    why:['Numbers 4, 7 and 8 give results through sustained effort rather than luck. Traditionally they are strengthened by discipline and service.',
+         'अंक 4, 7 और 8 भाग्य से नहीं, निरंतर परिश्रम से फल देते हैं। परंपरा में इन्हें अनुशासन और सेवा से बल मिलता है।'],
+    fix:planetFix(NUM_PLANET[reduceNum(P.lifePath)]||'Saturn')});
+  const c=compatibility(reduceNum(P.destiny),reduceNum(P.lifePath));
+  if(c.score<70) addFinding({key:'namefit',sev:'med',
+    title:['Your name number and Life Path pull differently ('+c.score+'%)','आपका नाम अंक और जीवन पथ भिन्न दिशा में ('+c.score+'%)'],
+    why:['The name you use totals '+P.destiny+' while your Life Path is '+P.lifePath+'. Numerology reads this as effort not always matching natural talent.',
+         'आपका प्रयुक्त नाम '+P.destiny+' बनता है जबकि जीवन पथ '+P.lifePath+' है। अंकशास्त्र इसे परिश्रम और स्वाभाविक प्रतिभा के बीच अंतर मानता है।'],
+    fix:[['✍️',['See the suggested spellings in the Numerology tab; use the chosen spelling consistently in signature and daily life.','अंकशास्त्र टैब में सुझाई वर्तनी देखें; चुनी गई वर्तनी हस्ताक्षर और दैनिक प्रयोग में लगातार अपनाएं।']]].concat(planetFix(NUM_PLANET[reduceNum(P.lifePath)]||'Jupiter'))});
+}
+/* ================= BACK BUTTON + LANG ================= */
+let TAB_HISTORY=[];
+function showTab(t,record){
+  if(record!==false){ const cur=document.querySelector('#tabBar button.active');
+    if(cur&&cur.dataset.t!==t) TAB_HISTORY.push(cur.dataset.t); }
+  document.querySelectorAll('#tabBar button').forEach(x=>x.classList.toggle('active',x.dataset.t===t));
+  document.querySelectorAll('.tabpane').forEach(x=>x.classList.toggle('show',x.id==='pane-'+t));
+  el('backBtn').style.display=TAB_HISTORY.length?'inline-block':'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goBack(){
+  if(!TAB_HISTORY.length) return false;
+  showTab(TAB_HISTORY.pop(),false);
+  el('backBtn').style.display=TAB_HISTORY.length?'inline-block':'none';
+  return true;
+}
+window.appGoBack=goBack;
+function setLang(l){
+  LANG=l;
+  el('langEN').classList.toggle('on',l==='en');
+  el('langHI').classList.toggle('on',l==='hi');
+  el('appTitle').textContent=L(UI.title[0],UI.title[1]);
+  el('appTag').textContent=L(UI.tag[0],UI.tag[1]);
+  el('backLbl').textContent=L(UI.back[0],UI.back[1]);
+  document.querySelectorAll('#tabBar button').forEach(b=>{
+    const k=UI.tabs[b.dataset.t]; if(k) b.textContent=L(k[0],k[1]); });
+  renderUpayTab();
+}
+/* ================= INIT ================= */
+document.querySelectorAll('#tabBar button').forEach(b=>b.onclick=()=>showTab(b.dataset.t));
+renderPalmTab(); renderFaceTab(); renderNumTab(); renderToolsTab(); renderAboutTab(); renderUpayTab();
+</script>
+</body>
+</html>
