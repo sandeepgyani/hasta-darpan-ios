@@ -2,10 +2,10 @@
 // Usage: node asc-screenshots.js <ISSUER_ID>
 const crypto = require('crypto'); const fs = require('fs'); const https = require('https'); const { URL } = require('url');
 const KEY_ID='AXSWLCWZ9K', P8='C:/Users/sande/Downloads/AuthKey_AXSWLCWZ9K.p8', ISSUER=process.argv[2];
-const APP='6796607611';
+const APP='6797386877';
 const SETS = [
-  { type: 'APP_IPHONE_65', files: ['store-assets/iphone-1-home.jpg','store-assets/iphone-2-recipe.jpg','store-assets/iphone-3-lessons.jpg','store-assets/iphone-4-mealplan.jpg'] },
-  { type: 'APP_IPAD_PRO_3GEN_129', files: ['store-assets/ipad-1-home.jpg'] },
+  { type: 'APP_IPHONE_65', files: ['store-assets/hd-ios-ip1.jpg','store-assets/hd-ios-ip2.jpg','store-assets/hd-ios-ip3.jpg','store-assets/hd-ios-ip4.jpg'] },
+  { type: 'APP_IPAD_PRO_3GEN_129', files: ['store-assets/hd-ios-ipad1.jpg'] },
 ];
 if(!ISSUER){console.error('Pass Issuer ID');process.exit(1);}
 function jwt(){const h=Buffer.from(JSON.stringify({alg:'ES256',kid:KEY_ID,typ:'JWT'})).toString('base64url');

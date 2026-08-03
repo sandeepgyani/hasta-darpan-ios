@@ -2,7 +2,7 @@
 // Usage: node asc-submit.js <ISSUER_ID>
 const crypto = require('crypto'); const fs = require('fs'); const https = require('https');
 const KEY_ID='AXSWLCWZ9K', P8='C:/Users/sande/Downloads/AuthKey_AXSWLCWZ9K.p8', ISSUER=process.argv[2];
-const APP='6796607611';
+const APP='6797386877';
 if(!ISSUER){console.error('Pass Issuer ID');process.exit(1);}
 function jwt(){const h=Buffer.from(JSON.stringify({alg:'ES256',kid:KEY_ID,typ:'JWT'})).toString('base64url');
 const n=Math.floor(Date.now()/1000);const p=Buffer.from(JSON.stringify({iss:ISSUER,iat:n,exp:n+900,aud:'appstoreconnect-v1'})).toString('base64url');
