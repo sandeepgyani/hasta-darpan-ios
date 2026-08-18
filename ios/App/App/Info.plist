@@ -26,6 +26,10 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Hasta Darpan needs camera access so you can take a photo of your palm for reading.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Hasta Darpan needs photo library access so you can choose an existing photo of your palm for reading.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
