@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Hasta Darpan — Palmistry, Face Reading &amp; Numerology</title>
+<title>Ank Numerology &amp; Lucky Days — Name, Number &amp; Date Calculator</title>
 <style>
 :root{
   --bg:#12100f; --panel:#221d19; --panel2:#2e2823; --gold:#d9a441; --gold2:#f2cd7e;
@@ -92,8 +92,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02);}
 </head>
 <body>
 <header>
-  <h1><span class="sym">☙</span> <span id="appTitle">Hasta Darpan</span> <span class="sym">❧</span></h1>
-  <p id="appTag">Palmistry · Face Reading · Numerology — measured on your device, read in the traditional way</p>
+  <h1><span class="sym">☙</span> <span id="appTitle">Ank Numerology</span> <span class="sym">❧</span></h1>
+  <p id="appTag">Life Path, Destiny &amp; lucky dates from your name and number tools · plus guided palm &amp; face measurement</p>
   <div class="topbar">
     <button id="backBtn" onclick="goBack()" style="display:none">← <span id="backLbl">Back</span></button>
     <button id="langEN" class="on" onclick="setLang('en')">English</button>
@@ -102,18 +102,18 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02);}
 </header>
 <div class="wrap">
   <div class="tabs" id="tabBar">
-    <button data-t="palm" class="active">🖐 Palmistry</button>
-    <button data-t="face">🙂 Face Reading</button>
-    <button data-t="num">🔢 Numerology</button>
-    <button data-t="upay">🪔 Upay</button>
+    <button data-t="num" class="active">🔢 Numerology</button>
     <button data-t="tools">🧮 Number Tools</button>
+    <button data-t="upay">🪔 Upay</button>
+    <button data-t="palm">🖐 Palmistry</button>
+    <button data-t="face">🙂 Face Reading</button>
     <button data-t="about">📖 How it works</button>
   </div>
-  <div class="tabpane show" id="pane-palm"></div>
-  <div class="tabpane" id="pane-face"></div>
-  <div class="tabpane" id="pane-num"></div>
-  <div class="tabpane" id="pane-upay"></div>
+  <div class="tabpane show" id="pane-num"></div>
   <div class="tabpane" id="pane-tools"></div>
+  <div class="tabpane" id="pane-upay"></div>
+  <div class="tabpane" id="pane-palm"></div>
+  <div class="tabpane" id="pane-face"></div>
   <div class="tabpane" id="pane-about"></div>
 </div>
 <div id="toast"></div>
@@ -1143,9 +1143,9 @@ function renderAboutTab(){
 let LANG='en';
 const L=(en,hi)=>LANG==='hi'?hi:en;
 const UI={
- title:['Hasta Darpan','हस्त दर्पण'],
- tag:['Palmistry · Face Reading · Numerology — measured on your device, read in the traditional way',
-      'हस्तरेखा · चेहरा पठन · अंकशास्त्र — आपके फ़ोन पर मापा गया, पारंपरिक विधि से पढ़ा गया'],
+ title:['Ank Numerology','अंक ज्योतिष'],
+ tag:['Life Path, Destiny & lucky dates from your name and number tools · plus guided palm & face measurement',
+      'नाम और अंक उपकरणों से जीवन पथ, भाग्यांक और शुभ तिथियां · साथ ही हस्त व चेहरा मापन'],
  back:['Back','वापस'],
  tabs:{palm:['🖐 Palmistry','🖐 हस्तरेखा'],face:['🙂 Face Reading','🙂 चेहरा पठन'],
    num:['🔢 Numerology','🔢 अंकशास्त्र'],upay:['🪔 Upay','🪔 उपाय'],
